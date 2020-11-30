@@ -1,12 +1,21 @@
-import * as React from 'react';
-import { StyleSheet, Image } from 'react-native';
+/**
+ * Documentation for Popular Screen: Follow the instagram-firebase app
+ * 
+ * Use a Flatlist that loads data with actions at the top and bottom
+ * 
+ * Load More
+ * 
+ * Add Pull-to-refresh
+ * 
+ * LayoutAnimation API to make layout animation changes look good
+ */
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Image, LayoutAnimation, RefreshControl } from 'react-native';
 import { initialWindowMetrics } from 'react-native-safe-area-context';
 
 import { Text, View, FlatList } from '../components/Themed';
 
-const MAL_API_LINK = (props: { animeID: string}) => {
-  "https://api.myanimelist.net/v2/anime/" + {props}+ "?fields=id,title,main_picture";
-};
+const PAGE_SIZE = 5;
 
 interface PhotoType {
   id: number;
@@ -14,7 +23,7 @@ interface PhotoType {
   photo?: string;
 };
 
-const DATA: PhotoType[] = [
+const ANIME_DATA: PhotoType[] = [
   {
     id: 20,
     title:'Naruto',
@@ -54,24 +63,28 @@ const DATA: PhotoType[] = [
 
 
 const Item = (props : {title: string, id: number, photo?: string }) => (
-  <View style={styles.item}>
+  <View>
     <Text style={styles.itemTitle}>{props.title}</Text>
     <Text style={styles.itemTitle}>{props.id}</Text>
     <Image style={styles.image} source={{uri: props.photo}}/>
   </View>
 );
 
-export default function GalleryScreen() {
+export default function PopularScreen() {
+  const [loading, setLoading] = useState(false);
+  const [posts, setPosts] = useState([]);
+
   const renderItem = (props: { item: PhotoType }) => (
     <Item title={props.item.title} id={props.item.id} photo={props.item.photo}/>
   );
-  
+  LayoutAnimation.easeInEaseOut();
   return (
     <View style={styles.container}>
       <FlatList
-        data={DATA}
+        data={ANIME_DATA}
         style={styles.photos}
         renderItem={renderItem}
+        keyExtractor={(item) => item.id.toString()}
       />
     </View>
   );
@@ -105,6 +118,6 @@ const styles = StyleSheet.create({
   image: {
     resizeMode: 'center' ,
     height: 400,
-    width: 600,
+    width: 400,
   }
 });
