@@ -1,15 +1,13 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 
-import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 
-export default function TabOneScreen() {
+export default function FavoritesScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>This is the best tab</Text>
+      <Text style={styles.title}>Favorites</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/TabOneScreen.js" />
     </View>
   );
 }
@@ -21,9 +19,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontSize: 40,
+    fontSize: 20,
     fontWeight: 'bold',
-    color:"#e5989b"
   },
   separator: {
     marginVertical: 30,
