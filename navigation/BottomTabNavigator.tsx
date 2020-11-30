@@ -1,14 +1,16 @@
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import * as React from 'react';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import GalleryScreen from '../screens/GalleryScreen';
+import LatestScreen from '../screens/LatestScreen';
+import PopularScreen from '../screens/PopularScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import ProfileScreen from '../screens/ProfileScreen';
-import { BottomTabParamList, GalleryParamList, FavoritesParamList, ProfileParamList } from '../types';
+import { BottomTabParamList, GalleryParamList, GalleryTabParamList, FavoritesParamList, ProfileParamList } from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -52,18 +54,37 @@ function TabBarIcon(props: { name: string; color: string }) {
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
+
 const GalleryStack = createStackNavigator<GalleryParamList>();
+const GalleryTab = createMaterialTopTabNavigator<GalleryTabParamList>();
 
 function GalleryNavigator() {
   return (
     <GalleryStack.Navigator>
       <GalleryStack.Screen
         name="GalleryScreen"
-        component={GalleryScreen}
-        options={{ headerTitle: 'Gallery Title' }}
+        component={GalleryTabNavigator}
+        options={{ headerTitle: 'Gallery Tab'}}
       />
     </GalleryStack.Navigator>
   );
+}
+
+function GalleryTabNavigator() {
+  return (
+    <GalleryTab.Navigator>
+      <GalleryTab.Screen
+      name="LatestTab"
+      component={LatestScreen}
+      options={{ title: 'Latest' }}
+    />
+    <GalleryTab.Screen
+      name="PopularTab"
+      component={PopularScreen}
+      options={{ title: 'Popular' }}
+    />
+  </GalleryTab.Navigator>
+  )
 }
 
 const FavoritesStack = createStackNavigator<FavoritesParamList>();
@@ -74,7 +95,7 @@ function FavoritesNavigator() {
       <FavoritesStack.Screen
         name="FavoritesScreen"
         component={FavoritesScreen}
-        options={{ headerTitle: 'Favorites Title' }}
+        options={{ headerTitle: 'Favorites' }}
       />
     </FavoritesStack.Navigator>
   );
@@ -89,7 +110,7 @@ function ProfileNavigator() {
       <ProfileStack.Screen
         name="ProfileScreen"
         component={ProfileScreen}
-        options={{ headerTitle: 'Profile Title' }}
+        options={{ headerTitle: 'Profile' }}
       />
     </ProfileStack.Navigator>
   );
