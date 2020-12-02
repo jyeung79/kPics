@@ -9,8 +9,8 @@
  * 
  * LayoutAnimation API to make layout animation changes look good
  */
+import { StyleSheet, Image, LayoutAnimation, RefreshControl, Animated } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Image, LayoutAnimation, RefreshControl } from 'react-native';
 import { initialWindowMetrics } from 'react-native-safe-area-context';
 
 import { Text, View, FlatList } from '../components/Themed';
@@ -66,7 +66,13 @@ const Item = (props : {title: string, id: number, photo?: string }) => (
   <View>
     <Text style={styles.itemTitle}>{props.title}</Text>
     <Text style={styles.itemTitle}>{props.id}</Text>
-    <Image style={styles.image} source={{uri: props.photo}}/>
+    <Image 
+      style={styles.image}
+      source={{
+        uri: props.photo,
+        cache: 'default'
+      }}
+    />
   </View>
 );
 
@@ -77,7 +83,6 @@ export default function LatestScreen() {
   const renderItem = (props: { item: PhotoType }) => (
     <Item title={props.item.title} id={props.item.id} photo={props.item.photo}/>
   );
-  LayoutAnimation.easeInEaseOut();
   return (
     <View style={styles.container}>
       <FlatList
@@ -116,7 +121,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
   },
   image: {
-    resizeMode: 'center' ,
+    resizeMode: 'contain' ,
     height: 400,
     width: 400,
   }
