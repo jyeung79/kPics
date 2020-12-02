@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import * as React from 'react';
@@ -12,7 +12,7 @@ import FavoritesScreen from '../screens/FavoritesScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import { BottomTabParamList, GalleryParamList, GalleryTabParamList, FavoritesParamList, ProfileParamList } from '../types';
 
-const BottomTab = createBottomTabNavigator<BottomTabParamList>();
+const BottomTab = createMaterialBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
@@ -20,7 +20,9 @@ export default function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="Gallery"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+      activeColor={Colors[colorScheme].tint}
+      inactiveColor="#b1aeb7"
+    >
       <BottomTab.Screen
         name="Gallery"
         component={GalleryNavigator}
