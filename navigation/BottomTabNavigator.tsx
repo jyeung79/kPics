@@ -1,35 +1,47 @@
 import { Ionicons } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import * as React from 'react';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import LatestScreen from '../screens/LatestScreen';
+import PopularScreen from '../screens/PopularScreen';
+import FavoritesScreen from '../screens/FavoritesScreen';
+import ProfileScreen from '../screens/ProfileScreen';
+import { BottomTabParamList, GalleryParamList, GalleryTabParamList, FavoritesParamList, ProfileParamList } from '../types';
 
-const BottomTab = createBottomTabNavigator<BottomTabParamList>();
+const BottomTab = createMaterialBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+      initialRouteName="Gallery"
+      activeColor={Colors[colorScheme].tint}
+      inactiveColor="#b1aeb7"
+    >
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneNavigator}
+        name="Gallery"
+        component={GalleryNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="ios-photos" color={color} />,
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoNavigator}
+        name="Favorites"
+        component={FavoritesNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="ios-heart" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Profile"
+        component={ProfileNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="ios-contact" color={color} />,
         }}
       />
     </BottomTab.Navigator>
@@ -44,30 +56,64 @@ function TabBarIcon(props: { name: string; color: string }) {
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TabOneStack = createStackNavigator<TabOneParamList>();
 
-function TabOneNavigator() {
+const GalleryStack = createStackNavigator<GalleryParamList>();
+const GalleryTab = createMaterialTopTabNavigator<GalleryTabParamList>();
+
+function GalleryNavigator() {
   return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen
-        name="TabOneScreen"
-        component={TabOneScreen}
-        options={{ headerTitle: 'Tab One Title' }}
+    <GalleryStack.Navigator>
+      <GalleryStack.Screen
+        name="GalleryScreen"
+        component={GalleryTabNavigator}
+        options={{ headerTitle: 'Gallery Tab'}}
       />
-    </TabOneStack.Navigator>
+    </GalleryStack.Navigator>
   );
 }
 
-const TabTwoStack = createStackNavigator<TabTwoParamList>();
-
-function TabTwoNavigator() {
+function GalleryTabNavigator() {
   return (
-    <TabTwoStack.Navigator>
-      <TabTwoStack.Screen
-        name="TabTwoScreen"
-        component={TabTwoScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
+    <GalleryTab.Navigator>
+      <GalleryTab.Screen
+      name="LatestTab"
+      component={LatestScreen}
+      options={{ title: 'Latest' }}
+    />
+    <GalleryTab.Screen
+      name="PopularTab"
+      component={PopularScreen}
+      options={{ title: 'Popular' }}
+    />
+  </GalleryTab.Navigator>
+  )
+}
+
+const FavoritesStack = createStackNavigator<FavoritesParamList>();
+
+function FavoritesNavigator() {
+  return (
+    <FavoritesStack.Navigator>
+      <FavoritesStack.Screen
+        name="FavoritesScreen"
+        component={FavoritesScreen}
+        options={{ headerTitle: 'Favorites' }}
       />
-    </TabTwoStack.Navigator>
+    </FavoritesStack.Navigator>
+  );
+}
+
+
+const ProfileStack = createStackNavigator<ProfileParamList>();
+
+function ProfileNavigator() {
+  return (
+    <ProfileStack.Navigator>
+      <ProfileStack.Screen
+        name="ProfileScreen"
+        component={ProfileScreen}
+        options={{ headerTitle: 'Profile' }}
+      />
+    </ProfileStack.Navigator>
   );
 }

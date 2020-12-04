@@ -1,0 +1,123 @@
+/**
+ * Documentation for Popular Screen: Follow the instagram-firebase app
+ * 
+ * Use a Flatlist that loads data with actions at the top and bottom
+ * 
+ * Load More
+ * 
+ * Add Pull-to-refresh
+ * 
+ * LayoutAnimation API to make layout animation changes look good
+ */
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Image, LayoutAnimation, RefreshControl } from 'react-native';
+import { initialWindowMetrics } from 'react-native-safe-area-context';
+
+import { Text, View, FlatList } from '../components/Themed';
+
+const PAGE_SIZE = 5;
+
+interface PhotoType {
+  id: number;
+  title: string;
+  photo?: string;
+};
+
+const ANIME_DATA: PhotoType[] = [
+  {
+    id: 20,
+    title:'Naruto',
+    photo: 'https://cdn.myanimelist.net/images/anime/13/17405.jpg',
+  },
+  {
+    id: 269,
+    title:'Bleach',
+    photo: 'https://cdn.myanimelist.net/images/anime/3/40451.jpg',
+  },
+  {
+    id: 21,
+    title:'One Piece',
+    photo: 'https://cdn.myanimelist.net/images/anime/6/73245.jpg',
+  },
+  {
+    id:38000,
+    title:'KNY'
+  },
+  {
+    id: 16498,
+    title:'Shingeki No Kyojin'
+  },
+  {
+    id: 40052,
+    title:'The Great Pretender'
+  },
+  {
+    id: 7,
+    title:'Inuyasha'
+  },
+  {
+    id: 8,
+    title:'Fullmetal Alchemist Brotherhood'
+  },
+];
+
+
+const Item = (props : {title: string, id: number, photo?: string }) => (
+  <View>
+    <Text style={styles.itemTitle}>{props.title}</Text>
+    <Text style={styles.itemTitle}>{props.id}</Text>
+    <Image style={styles.image} source={{uri: props.photo}}/>
+  </View>
+);
+
+export default function PopularScreen() {
+  const [loading, setLoading] = useState(false);
+  const [posts, setPosts] = useState([]);
+
+  const renderItem = (props: { item: PhotoType }) => (
+    <Item title={props.item.title} id={props.item.id} photo={props.item.photo}/>
+  );
+  LayoutAnimation.easeInEaseOut();
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={ANIME_DATA}
+        style={styles.photos}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id.toString()}
+      />
+    </View>
+  );
+}
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  title: {
+    fontSize: 40,
+    fontWeight: 'bold',
+    color:"#e5989b"
+  },
+  photos: {
+    marginHorizontal: 10,
+  },
+  item: {
+    backgroundColor: '#f9c3ff',
+    padding: 20,
+    marginVertical: 2,
+    marginHorizontal: 0,
+    alignSelf: 'center',
+  },
+  itemTitle: {
+    fontSize: 28,
+  },
+  image: {
+    resizeMode: 'center' ,
+    height: 400,
+    width: 400,
+  }
+});
