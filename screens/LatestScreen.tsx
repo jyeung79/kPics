@@ -23,6 +23,11 @@ interface PhotoType {
   photo?: string;
 };
 
+interface TweetData {
+  tweetNum: number;
+  media?: boolean; // Do you want the media attachments
+}
+
 const ANIME_DATA: PhotoType[] = [
   {
     id: 20,
@@ -77,8 +82,19 @@ const Item = (props : {title: string, id: number, photo?: string }) => (
 );
 
 export default function LatestScreen() {
-  const [loading, setLoading] = useState(false);
-  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [photos, setPhotos] = useState([]);
+  const [search, setSearch] = useState('Dahyun');
+
+  useEffect(() => {
+    function loadContent(post: TweetData) {
+      fetch('"https://api.twitter.com/2/tweets/' + {post} + "?expansions=attachments.media_keys");
+    };
+    // Create an scoped async function in the hook
+    (async function pullTweets() {``
+      await loadContent({ tweetNum: 440322224407314432}); 
+    })();
+  }, []);
 
   const renderItem = (props: { item: PhotoType }) => (
     <Item title={props.item.title} id={props.item.id} photo={props.item.photo}/>
@@ -93,8 +109,7 @@ export default function LatestScreen() {
       />
     </View>
   );
-}
-
+};
 
 const styles = StyleSheet.create({
   container: {
