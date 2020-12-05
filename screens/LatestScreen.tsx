@@ -24,11 +24,6 @@ interface PhotoType {
   photo?: string;
 };
 
-interface TweetData {
-  tweetNum: number;
-  media?: boolean; // Do you want the media attachments
-}
-
 const ANIME_DATA: PhotoType[] = [
   {
     id: 20,
@@ -67,11 +62,10 @@ const ANIME_DATA: PhotoType[] = [
   },
 ];
 
+let tweets: String[] = ['1124708249188483072', '1333815755465314306', '1333815691665756162', '1330149509465333762', '1328696475195375617']
 
-const Item = (props : {title: string, id: number, photo?: string }) => (
+const Item = (props : {photo: string }) => (
   <View>
-    <Text style={styles.itemTitle}>{props.title}</Text>
-    <Text style={styles.itemTitle}>{props.id}</Text>
     <Image 
       style={styles.image}
       source={{
@@ -82,25 +76,47 @@ const Item = (props : {title: string, id: number, photo?: string }) => (
   </View>
 );
 
+interface TweetMediaList extends Array<TweetMedia>{};
+
+interface TweetMedia {
+    height: number,
+    media_key: string,
+    type: string,
+    url: string,
+    width: number  
+};
+
 export default function LatestScreen() {
   const [loading, setLoading] = useState(true);
-  const [photos, setPhotos] = useState([]);
+  const [photos, setPhotos] = useState<TweetMediaList>();
   const [search, setSearch] = useState('Dahyun');
 
+  /**
+   * 
+   */
   useEffect(() => {
-    getTweets();
+    (async function incomingTweet() {
+      let allTweets : TweetMediaList = [];
+      for (const item of tweets) {
+        const incomingTweets = await getTweets<TweetMediaList>("https://api.twitter.com/2/tweets/" + item + "?expansions=attachments.media_keys&media.fields=url,height,width");
+        //console.log(incomingTweets);
+        allTweets.push(...incomingTweets);
+      }
+      console.log(allTweets);
+      setPhotos(allTweets);
+    })();
   }, []);
 
-  const renderItem = (props: { item: PhotoType }) => (
-    <Item title={props.item.title} id={props.item.id} photo={props.item.photo}/>
+  const renderItem = (props: { item: TweetMedia }) => (
+      <Item photo={props.item.url}/>
   );
   return (
     <View style={styles.container}>
       <FlatList
-        data={ANIME_DATA}
+        data={photos}
         style={styles.photos}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.media_key.slice(2).toString()}
       />
     </View>
   );
@@ -122,7 +138,6 @@ const styles = StyleSheet.create({
   },
   item: {
     backgroundColor: '#f9c3ff',
-    padding: 20,
     marginVertical: 2,
     marginHorizontal: 0,
     alignSelf: 'center',
@@ -132,7 +147,7 @@ const styles = StyleSheet.create({
   },
   image: {
     resizeMode: 'contain' ,
-    height: 400,
+    height: 550,
     width: 400,
   }
 });
