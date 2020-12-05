@@ -12,6 +12,7 @@
 import { StyleSheet, Image, LayoutAnimation, RefreshControl, Animated } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { initialWindowMetrics } from 'react-native-safe-area-context';
+import getTweets from '../utils/twitterAPI';
 
 import { Text, View, FlatList } from '../components/Themed';
 
@@ -87,13 +88,7 @@ export default function LatestScreen() {
   const [search, setSearch] = useState('Dahyun');
 
   useEffect(() => {
-    function loadContent(post: TweetData) {
-      fetch('"https://api.twitter.com/2/tweets/' + {post} + "?expansions=attachments.media_keys");
-    };
-    // Create an scoped async function in the hook
-    (async function pullTweets() {``
-      await loadContent({ tweetNum: 440322224407314432}); 
-    })();
+    getTweets();
   }, []);
 
   const renderItem = (props: { item: PhotoType }) => (
