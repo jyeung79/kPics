@@ -18,50 +18,6 @@ import { Text, View, FlatList } from '../components/Themed';
 
 const PAGE_SIZE = 5;
 
-interface PhotoType {
-  id: number;
-  title: string;
-  photo?: string;
-};
-
-const ANIME_DATA: PhotoType[] = [
-  {
-    id: 20,
-    title:'Naruto',
-    photo: 'https://cdn.myanimelist.net/images/anime/13/17405.jpg',
-  },
-  {
-    id: 269,
-    title:'Bleach',
-    photo: 'https://cdn.myanimelist.net/images/anime/3/40451.jpg',
-  },
-  {
-    id: 21,
-    title:'One Piece',
-    photo: 'https://cdn.myanimelist.net/images/anime/6/73245.jpg',
-  },
-  {
-    id:38000,
-    title:'KNY'
-  },
-  {
-    id: 16498,
-    title:'Shingeki No Kyojin'
-  },
-  {
-    id: 40052,
-    title:'The Great Pretender'
-  },
-  {
-    id: 7,
-    title:'Inuyasha'
-  },
-  {
-    id: 8,
-    title:'Fullmetal Alchemist Brotherhood'
-  },
-];
-
 let tweets: String[] = ['1124708249188483072', '1333815755465314306', '1333815691665756162', '1330149509465333762', '1328696475195375617']
 
 const Item = (props : {photo: string }) => (
@@ -81,7 +37,7 @@ interface TweetMediaList extends Array<TweetMedia>{};
 interface TweetMedia {
     height: number,
     media_key: string,
-    type: string,
+    type: string, 
     url: string,
     width: number  
 };
