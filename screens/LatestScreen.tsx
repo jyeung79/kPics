@@ -9,103 +9,80 @@
  * 
  * LayoutAnimation API to make layout animation changes look good
  */
-import { StyleSheet, Image, LayoutAnimation, RefreshControl, Animated } from 'react-native';
+import { StyleSheet, Image, Animated, RefreshControl, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { initialWindowMetrics } from 'react-native-safe-area-context';
+import getTweets from '../utils/twitterAPI';
 
 import { Text, View, FlatList } from '../components/Themed';
 
 const PAGE_SIZE = 5;
 
-interface PhotoType {
-  id: number;
-  title: string;
-  photo?: string;
-};
+let tweets: String[] = ['1124708249188483072', '1333815755465314306', '1333815691665756162', '1330149509465333762', '1328696475195375617']
 
-interface TweetData {
-  tweetNum: number;
-  media?: boolean; // Do you want the media attachments
-}
-
-const ANIME_DATA: PhotoType[] = [
-  {
-    id: 20,
-    title:'Naruto',
-    photo: 'https://cdn.myanimelist.net/images/anime/13/17405.jpg',
-  },
-  {
-    id: 269,
-    title:'Bleach',
-    photo: 'https://cdn.myanimelist.net/images/anime/3/40451.jpg',
-  },
-  {
-    id: 21,
-    title:'One Piece',
-    photo: 'https://cdn.myanimelist.net/images/anime/6/73245.jpg',
-  },
-  {
-    id:38000,
-    title:'KNY'
-  },
-  {
-    id: 16498,
-    title:'Shingeki No Kyojin'
-  },
-  {
-    id: 40052,
-    title:'The Great Pretender'
-  },
-  {
-    id: 7,
-    title:'Inuyasha'
-  },
-  {
-    id: 8,
-    title:'Fullmetal Alchemist Brotherhood'
-  },
-];
-
-
-const Item = (props : {title: string, id: number, photo?: string }) => (
-  <View>
-    <Text style={styles.itemTitle}>{props.title}</Text>
-    <Text style={styles.itemTitle}>{props.id}</Text>
+const Item = (props : {photo: string, onPress(): void }) => (
+  <TouchableOpacity 
+    style={styles.imageContainer}
+    activeOpacity={0.8}
+    delayPressIn={80}
+    accessibilityRole='imagebutton'
+    onPress={props.onPress}
+  >
     <Image 
       style={styles.image}
       source={{
         uri: props.photo,
         cache: 'default'
       }}
+      resizeMode='cover'
     />
-  </View>
+  </TouchableOpacity>
 );
+
+interface TweetMediaList extends Array<TweetMedia>{};
+
+interface TweetMedia {
+    height: number,
+    media_key: string,
+    type: string, 
+    url: string,
+    width: number  
+};
 
 export default function LatestScreen() {
   const [loading, setLoading] = useState(true);
-  const [photos, setPhotos] = useState([]);
+  const [photos, setPhotos] = useState<TweetMediaList>();
   const [search, setSearch] = useState('Dahyun');
+  const [target, setTarget] = useState('');
 
+  /**
+   *  Fetch incoming Tweet data
+   */
   useEffect(() => {
-    function loadContent(post: TweetData) {
-      fetch('"https://api.twitter.com/2/tweets/' + {post} + "?expansions=attachments.media_keys");
-    };
-    // Create an scoped async function in the hook
-    (async function pullTweets() {``
-      await loadContent({ tweetNum: 440322224407314432}); 
+    (async function incomingTweet() {
+      let allTweets : TweetMediaList = [];
+      for (const item of tweets) {
+        const incomingTweets = await getTweets<TweetMediaList>("https://api.twitter.com/2/tweets/" + item + "?expansions=attachments.media_keys&media.fields=url,height,width");
+        allTweets.push(...incomingTweets);
+      }
+      console.log(allTweets);
+      setPhotos(allTweets);
     })();
   }, []);
 
-  const renderItem = (props: { item: PhotoType }) => (
-    <Item title={props.item.title} id={props.item.id} photo={props.item.photo}/>
+  const renderItem = (props: { item: TweetMedia }) => (
+      <Item 
+        photo={props.item.url}
+        onPress={() => setTarget(props.item.url)}
+      />
   );
   return (
     <View style={styles.container}>
       <FlatList
-        data={ANIME_DATA}
+        data={photos}
         style={styles.photos}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.media_key.slice(2).toString()}
       />
     </View>
   );
@@ -123,21 +100,24 @@ const styles = StyleSheet.create({
     color:"#e5989b"
   },
   photos: {
-    marginHorizontal: 10,
   },
-  item: {
-    backgroundColor: '#f9c3ff',
-    padding: 20,
+  imageContainer: {
+    height: 517,
+    width: 361,
     marginVertical: 2,
-    marginHorizontal: 0,
+    marginLeft: 5,
+    marginRight: 5,
+    borderRadius: 10,
+
     alignSelf: 'center',
   },
   itemTitle: {
     fontSize: 28,
   },
   image: {
-    resizeMode: 'contain' ,
-    height: 400,
-    width: 400,
+    height: '100%',
+    width: '100%',
+    resizeMode: 'cover',
+    borderRadius: 10,
   }
 });
