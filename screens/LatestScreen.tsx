@@ -9,7 +9,7 @@
  * 
  * LayoutAnimation API to make layout animation changes look good
  */
-import { StyleSheet, Image, Animated, RefreshControl, TouchableOpacity } from 'react-native';
+import { StyleSheet, Image, Animated, RefreshControl, TouchableOpacity, Button } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { initialWindowMetrics } from 'react-native-safe-area-context';
 import getTweets from '../utils/twitterAPI';
@@ -20,7 +20,7 @@ const PAGE_SIZE = 5;
 
 let tweets: String[] = ['1124708249188483072', '1333815755465314306', '1333815691665756162', '1330149509465333762', '1328696475195375617']
 
-const Item = (props : {photo: string, onPress(): void }) => (
+const Item = (props : {photo: string, onPress(): void}) => (
   <TouchableOpacity 
     style={styles.imageContainer}
     activeOpacity={0.8}
@@ -53,7 +53,7 @@ export default function LatestScreen() {
   const [loading, setLoading] = useState(true);
   const [photos, setPhotos] = useState<TweetMediaList>();
   const [search, setSearch] = useState('Dahyun');
-  const [target, setTarget] = useState('');
+  const [modalVisible, showModal] = useState(false);
 
   /**
    *  Fetch incoming Tweet data
@@ -73,7 +73,7 @@ export default function LatestScreen() {
   const renderItem = (props: { item: TweetMedia }) => (
       <Item 
         photo={props.item.url}
-        onPress={() => setTarget(props.item.url)}
+        onPress={() => showModal(!modalVisible)}
       />
   );
   return (
