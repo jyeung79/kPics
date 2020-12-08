@@ -21,13 +21,14 @@ const PAGE_SIZE = 5;
 let tweets: String[] = ['1124708249188483072', '1333815755465314306', '1333815691665756162', '1330149509465333762', '1328696475195375617']
 
 const Item = (props : {photo: string }) => (
-  <View>
+  <View style={styles.imageContainer}>
     <Image 
       style={styles.image}
       source={{
         uri: props.photo,
         cache: 'default'
       }}
+      resizeMode='cover'
     />
   </View>
 );
@@ -55,7 +56,7 @@ export default function LatestScreen() {
       let allTweets : TweetMediaList = [];
       for (const item of tweets) {
         const incomingTweets = await getTweets<TweetMediaList>("https://api.twitter.com/2/tweets/" + item + "?expansions=attachments.media_keys&media.fields=url,height,width");
-        //console.log(incomingTweets);
+        console.log(incomingTweets);
         allTweets.push(...incomingTweets);
       }
       console.log(allTweets);
@@ -90,20 +91,24 @@ const styles = StyleSheet.create({
     color:"#e5989b"
   },
   photos: {
-    marginHorizontal: 10,
   },
-  item: {
-    backgroundColor: '#f9c3ff',
+  imageContainer: {
+    height: 517,
+    width: 361,
     marginVertical: 2,
-    marginHorizontal: 0,
+    marginLeft: 5,
+    marginRight: 5,
+    borderRadius: 10,
+
     alignSelf: 'center',
   },
   itemTitle: {
     fontSize: 28,
   },
   image: {
-    resizeMode: 'contain' ,
-    height: 550,
-    width: 400,
+    height: '100%',
+    width: '100%',
+    resizeMode: 'cover',
+    borderRadius: 10,
   }
 });
