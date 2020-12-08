@@ -11,6 +11,7 @@ import PopularScreen from '../screens/PopularScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import { BottomTabParamList, GalleryParamList, GalleryTabParamList, FavoritesParamList, ProfileParamList } from '../types';
+import Navigation from '.';
 
 const BottomTab = createMaterialBottomTabNavigator<BottomTabParamList>();
 
