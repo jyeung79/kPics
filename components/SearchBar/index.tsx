@@ -1,32 +1,47 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { StyleSheet, TextInput, Animated, TouchableOpacity, Platform } from 'react-native';
+import { StyleSheet, TextInput, Animated, TouchableOpacity, Platform, FlatList, ListRenderItem} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SearchBar } from 'react-native-elements';
+import { ListItem } from 'react-native-elements';
 
 const DATA = [
     {
+        id: 1,
         title: 'TWICE',
-        twitterUsers : []
+        twitterUsers : [],
+        subtitle:'The most popular Girl Group in Korea',
     },
     {
+        id: 2,
         title: 'BlackPink',
-        twitterUsers : []
+        twitterUsers : [],
+        subtitle:'The most popular International Girl Group',
     },
     {
+        id: 3,
         title: 'BTS',
-        twitterUsers : []
+        twitterUsers : [],
+        subtitle: 'The most popular International Boy Group',
     },
     {
+        id: 4,
         title: 'Izone',
-        twitterUsers : []
+        twitterUsers : [],
+        subtitle: 'My favorite Girl Group'
     }
 ];
 
 interface SearchType {
+    id: number,
     title: string,
-    twitterUsers: Array<String>
+    twitterUsers?: Array<String>
+    subtitle?: string,
 }
 
+/**
+ * Decided to have a different screen to show suggestions because it's too inconsistent and hard to have a dropdown menu
+ * It should be easier to have a different page to show suggestions
+ */
 
 export default function SearchBarComponent() {
     const [search, setSearch] = useState('');

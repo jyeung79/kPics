@@ -14,7 +14,6 @@ import getTweets from '../utils/twitterAPI';
 import { useNavigation } from '@react-navigation/native';
 
 import { Text, View, FlatList } from '../components/Themed';
-import SearchBar from '../components/searchBarAnimation';
 
 const PAGE_SIZE = 5;
 
@@ -56,7 +55,8 @@ export default function LatestScreen() {
   const [modalVisible, showModal] = useState(false);
 
   /**
-   *  Fetch incoming Tweet data
+   *  Fetch incoming Tweet data using useEffect
+   * https://medium.com/javascript-in-plain-english/how-to-use-async-function-in-react-hook-useeffect-typescript-js-6204a788a435
    */
   useEffect(() => {
     (async function incomingTweet() {

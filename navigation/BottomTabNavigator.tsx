@@ -10,8 +10,7 @@ import LatestScreen from '../screens/LatestScreen';
 import PopularScreen from '../screens/PopularScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import ProfileScreen from '../screens/ProfileScreen';
-import SearchBar from '../components/searchBarAnimation';
-import { SafeAreaView, StatusBar } from 'react-native';
+import SearchBarComponent from '../components/SearchBar';
 
 import { BottomTabParamList, GalleryParamList, GalleryTabParamList, FavoritesParamList, ProfileParamList } from '../types';
 import Navigation from '.';
@@ -73,7 +72,7 @@ function GalleryNavigator() {
         component={GalleryTabNavigator}
         options={{
           header: () => (
-              <SearchBar />
+            <SearchBarComponent />
           )
         }}
       />
