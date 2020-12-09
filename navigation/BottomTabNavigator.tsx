@@ -10,6 +10,9 @@ import LatestScreen from '../screens/LatestScreen';
 import PopularScreen from '../screens/PopularScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import SearchBar from '../components/searchBarAnimation';
+import { SafeAreaView, StatusBar } from 'react-native';
+
 import { BottomTabParamList, GalleryParamList, GalleryTabParamList, FavoritesParamList, ProfileParamList } from '../types';
 import Navigation from '.';
 
@@ -62,12 +65,17 @@ const GalleryStack = createStackNavigator<GalleryParamList>();
 const GalleryTab = createMaterialTopTabNavigator<GalleryTabParamList>();
 
 function GalleryNavigator() {
+  const colorScheme = useColorScheme();
   return (
     <GalleryStack.Navigator>
       <GalleryStack.Screen
         name="GalleryScreen"
         component={GalleryTabNavigator}
-        options={{ headerTitle: 'Gallery Tab'}}
+        options={{
+          header: () => (
+              <SearchBar />
+          )
+        }}
       />
     </GalleryStack.Navigator>
   );

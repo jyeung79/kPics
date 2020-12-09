@@ -2,19 +2,19 @@
  * Documentation for Latest Screen: Follow the instagram-firebase app
  * 
  * Use a Flatlist that loads data with actions at the top and bottom
- * 
  * Load More
- * 
  * Add Pull-to-refresh
  * 
  * LayoutAnimation API to make layout animation changes look good
  */
-import { StyleSheet, Image, Animated, RefreshControl, TouchableOpacity, Button } from 'react-native';
+import { StyleSheet, Image, Animated, RefreshControl, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { initialWindowMetrics } from 'react-native-safe-area-context';
 import getTweets from '../utils/twitterAPI';
+import { useNavigation } from '@react-navigation/native';
 
 import { Text, View, FlatList } from '../components/Themed';
+import SearchBar from '../components/searchBarAnimation';
 
 const PAGE_SIZE = 5;
 
