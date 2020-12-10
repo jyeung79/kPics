@@ -11,8 +11,6 @@ import { StyleSheet, Image, Animated, RefreshControl, TouchableOpacity } from 'r
 import React, { useState, useEffect } from 'react';
 import { initialWindowMetrics } from 'react-native-safe-area-context';
 import getTweets from '../utils/twitterAPI';
-import { useNavigation } from '@react-navigation/native';
-
 import { Text, View, FlatList } from '../components/Themed';
 
 const PAGE_SIZE = 5;

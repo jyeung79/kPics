@@ -19,7 +19,7 @@ export default function SuggestionScreen() {
         {id: 3, title: 'BTS', subtitle: 'The most popular International Boy Group'},
         {id: 4, title: 'Izone', subtitle: 'My favorite Girl Group'},
     ]);
-
+    
     return (
         <View>
             <FlatList

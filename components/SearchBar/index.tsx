@@ -46,26 +46,27 @@ interface SearchType {
 
 export default function SearchBarComponent() {
     const [search, setSearch] = useState('');
-    const [filteredDataSource, setFilteredDataSource] = useState<SearchType[]>(DATA);
-    const [masterDataSource, setMasterDataSource] = useState<SearchType[]>(DATA);
+    const [suggestions, setSuggestions] = useState<SearchType[]>(DATA);
+    const [mainData, setMainData] = useState<SearchType[]>(DATA);
 
     /**
      * Navigation tool to navigate to different screens
      */
     const navigation = useNavigation();
-    const theme = useColorScheme();
 
-    const searchFilterFunction = (array: Array<SearchType>, text: string) => {
+    const searchFilterFunction = (target: Array<SearchType>, text: string) => {
         if (text) {
-            const newArray = array.filter(item => {
-                item.title.toLowerCase().includes(text);
-            })
-            setFilteredDataSource(newArray);
+            const newArray = target.filter((item: SearchType) => item.title.toLowerCase().includes(text.toLowerCase()));
+            
+            console.log(...newArray);
+            setSuggestions(newArray);
             setSearch(text);
         } else {
-            setFilteredDataSource(masterDataSource);
+            setSuggestions(mainData);
             setSearch(text);
         }
+        console.log(suggestions);
+        console.log(search);
     };
 
     return (
@@ -82,9 +83,10 @@ export default function SearchBarComponent() {
                 cancelIcon={{ color: 'white'}}
                 clearIcon={{ color: 'white'}}
                 searchIcon={{ size: 18, color: 'white' }}
-                onChangeText={(text: string) => searchFilterFunction(filteredDataSource, text)}
+                onChangeText={(text: string) => searchFilterFunction(suggestions, text)}
                 onFocus={() => navigation.navigate('SuggestionScreen')}
-                onClear={() => searchFilterFunction(filteredDataSource, '')}
+                onCancel={() => navigation.navigate('LatestScreen')}
+                onClear={() => searchFilterFunction(suggestions, '')}
                 placeholder="Type here..."
                 value={search}
             />
