@@ -92,12 +92,12 @@ function GalleryTabNavigator() {
       }}
     >
       <GalleryTab.Screen
-      name="LatestTab"
+      name="LatestScreen"
       component={LatestScreen}
       options={{ title: 'Latest' }}
     />
     <GalleryTab.Screen
-      name="PopularTab"
+      name="PopularScreen"
       component={PopularScreen}
       options={{ title: 'Popular' }}
     />
