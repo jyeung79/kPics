@@ -8,6 +8,7 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import LatestScreen from '../screens/LatestScreen';
 import PopularScreen from '../screens/PopularScreen';
+import SuggestionScreen from '../screens/SuggestionScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import SearchBarComponent from '../components/SearchBar';
@@ -76,13 +77,29 @@ function GalleryNavigator() {
           )
         }}
       />
+      <GalleryStack.Screen
+        name="SuggestionScreen"
+        component={SuggestionScreen}
+        options={{ 
+          header: () => (
+            <SearchBarComponent />
+          )
+        }}
+      />
     </GalleryStack.Navigator>
   );
 }
 
 function GalleryTabNavigator() {
   return (
-    <GalleryTab.Navigator>
+    <GalleryTab.Navigator
+      tabBarOptions={{
+        labelStyle: { fontSize: 12},
+        indicatorStyle: { backgroundColor: 'white' },
+        activeTintColor: 'white',
+        allowFontScaling: true,
+      }}
+    >
       <GalleryTab.Screen
       name="LatestTab"
       component={LatestScreen}

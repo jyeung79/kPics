@@ -11,6 +11,7 @@ export type BottomTabParamList = {
 
 export type GalleryParamList = {
   GalleryScreen: undefined;
+  SuggestionScreen: undefined;
 }
 
 export type GalleryTabParamList = {

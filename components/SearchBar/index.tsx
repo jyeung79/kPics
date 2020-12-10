@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { StyleSheet, TextInput, Animated, TouchableOpacity, Platform, FlatList, ListRenderItem} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SearchBar } from 'react-native-elements';
-import { ListItem } from 'react-native-elements';
+import { useNavigation } from '@react-navigation/native';
 
 const DATA = [
     {
@@ -48,6 +48,11 @@ export default function SearchBarComponent() {
     const [filteredDataSource, setFilteredDataSource] = useState<SearchType[]>(DATA);
     const [masterDataSource, setMasterDataSource] = useState<SearchType[]>(DATA);
 
+    /**
+     * Navigation tool to navigate to different screens
+     */
+    const navigation = useNavigation();
+
     const searchFilterFunction = (array: Array<SearchType>, text: string) => {
         if (text) {
             const newArray = array.filter(item => {
@@ -66,6 +71,7 @@ export default function SearchBarComponent() {
             <SearchBar
                 searchIcon={{ size: 18 }}
                 onChangeText={(text: string) => searchFilterFunction(filteredDataSource, text)}
+                onFocus={() => navigation.navigate('SuggestionScreen')}
                 onClear={() => searchFilterFunction(filteredDataSource, '')}
                 containerStyle={styles.searchBar}
                 placeholder="Type here..."
