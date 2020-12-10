@@ -14,8 +14,9 @@ export type GalleryParamList = {
 }
 
 export type GalleryTabParamList = {
-  LatestTab: undefined;
-  PopularTab: undefined;
+  LatestScreen: undefined;
+  PopularScreen: undefined;
+  SuggestionScreen: undefined;
 }
 
 export type FavoritesParamList = {

@@ -8,8 +8,11 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import LatestScreen from '../screens/LatestScreen';
 import PopularScreen from '../screens/PopularScreen';
+import SuggestionScreen from '../screens/SuggestionScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import SearchBarComponent from '../components/SearchBar';
+
 import { BottomTabParamList, GalleryParamList, GalleryTabParamList, FavoritesParamList, ProfileParamList } from '../types';
 import Navigation from '.';
 
@@ -62,12 +65,17 @@ const GalleryStack = createStackNavigator<GalleryParamList>();
 const GalleryTab = createMaterialTopTabNavigator<GalleryTabParamList>();
 
 function GalleryNavigator() {
+  const colorScheme = useColorScheme();
   return (
     <GalleryStack.Navigator>
       <GalleryStack.Screen
         name="GalleryScreen"
         component={GalleryTabNavigator}
-        options={{ headerTitle: 'Gallery Tab'}}
+        options={{
+          header: () => (
+            <SearchBarComponent />
+          )
+        }}
       />
     </GalleryStack.Navigator>
   );
@@ -75,16 +83,28 @@ function GalleryNavigator() {
 
 function GalleryTabNavigator() {
   return (
-    <GalleryTab.Navigator>
+    <GalleryTab.Navigator
+      tabBarOptions={{
+        labelStyle: { fontSize: 12},
+        indicatorStyle: { backgroundColor: 'white' },
+        activeTintColor: 'white',
+        allowFontScaling: true,
+      }}
+    >
       <GalleryTab.Screen
-      name="LatestTab"
+      name="LatestScreen"
       component={LatestScreen}
       options={{ title: 'Latest' }}
     />
     <GalleryTab.Screen
-      name="PopularTab"
+      name="PopularScreen"
       component={PopularScreen}
       options={{ title: 'Popular' }}
+    />
+    <GalleryTab.Screen
+        name="SuggestionScreen"
+        component={SuggestionScreen}
+        options={{}}
     />
   </GalleryTab.Navigator>
   )
