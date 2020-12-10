@@ -3,6 +3,7 @@ import { StyleSheet, TextInput, Animated, TouchableOpacity, Platform, FlatList, 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SearchBar } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
+import useColorScheme from '../../hooks/useColorScheme';
 
 const DATA = [
     {
@@ -52,6 +53,7 @@ export default function SearchBarComponent() {
      * Navigation tool to navigate to different screens
      */
     const navigation = useNavigation();
+    const theme = useColorScheme();
 
     const searchFilterFunction = (array: Array<SearchType>, text: string) => {
         if (text) {
@@ -69,11 +71,20 @@ export default function SearchBarComponent() {
     return (
         <SafeAreaView style={styles.container} >
             <SearchBar
-                searchIcon={{ size: 18 }}
+                platform={Platform.OS === 'android' ? 'android' : 'ios'}
+                containerStyle={styles.container}
+                inputContainerStyle={styles.searchTextContainer}
+                inputStyle={styles.searchText}
+                leftIconContainerStyle={styles.leftIcon}
+                rightIconContainerStyle={styles.rightIcon}
+                placeholderTextColor={ 'white'}
+                
+                cancelIcon={{ color: 'white'}}
+                clearIcon={{ color: 'white'}}
+                searchIcon={{ size: 18, color: 'white' }}
                 onChangeText={(text: string) => searchFilterFunction(filteredDataSource, text)}
                 onFocus={() => navigation.navigate('SuggestionScreen')}
                 onClear={() => searchFilterFunction(filteredDataSource, '')}
-                containerStyle={styles.searchBar}
                 placeholder="Type here..."
                 value={search}
             />
@@ -83,14 +94,25 @@ export default function SearchBarComponent() {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'white',
+        backgroundColor: 'black',
+        color: 'white',
         paddingTop: 0,
     },
-    itemStyle: {
-        padding: 10,
+    leftIcon: {
+        backgroundColor: '#393E42',
+        color: 'white',
     },
-    searchBar: {
-        backgroundColor: 'black',
-        color: 'white'
+    rightIcon: {
+        backgroundColor: '#393E42',
+        color: 'white',
+    },
+    searchText: {
+        backgroundColor:'#393E42',
+        color: 'white',
+        paddingTop: 0,
+    },
+    searchTextContainer: {
+        backgroundColor: '#393E42',
+        borderRadius: 20,
     }
 });

@@ -77,15 +77,6 @@ function GalleryNavigator() {
           )
         }}
       />
-      <GalleryStack.Screen
-        name="SuggestionScreen"
-        component={SuggestionScreen}
-        options={{ 
-          header: () => (
-            <SearchBarComponent />
-          )
-        }}
-      />
     </GalleryStack.Navigator>
   );
 }
@@ -109,6 +100,11 @@ function GalleryTabNavigator() {
       name="PopularTab"
       component={PopularScreen}
       options={{ title: 'Popular' }}
+    />
+    <GalleryTab.Screen
+        name="SuggestionScreen"
+        component={SuggestionScreen}
+        options={{}}
     />
   </GalleryTab.Navigator>
   )
