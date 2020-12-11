@@ -6,33 +6,6 @@ import { useNavigation } from '@react-navigation/native';
 import { SearchObject } from '../../types';
 import useColorScheme from '../../hooks/useColorScheme';
 
-const DATA = [
-    {
-        id: 1,
-        title: 'TWICE',
-        twitterUsers : [],
-        subtitle:'The most popular Girl Group in Korea',
-    },
-    {
-        id: 2,
-        title: 'BlackPink',
-        twitterUsers : [],
-        subtitle:'The most popular International Girl Group',
-    },
-    {
-        id: 3,
-        title: 'BTS',
-        twitterUsers : [],
-        subtitle: 'The most popular International Boy Group',
-    },
-    {
-        id: 4,
-        title: 'Izone',
-        twitterUsers : [],
-        subtitle: 'My favorite Girl Group'
-    }
-];
-
 /**
  * Decided to have a different screen to show suggestions because it's too inconsistent and hard to have a dropdown menu
  * It should be easier to have a different page to show suggestions
@@ -40,28 +13,10 @@ const DATA = [
 
 export default function SearchBarComponent() {
     const [search, setSearch] = useState('');
-    const [suggestions, setSuggestions] = useState<SearchObject[]>(DATA);
-    const [mainData, setMainData] = useState<SearchObject[]>(DATA);
-
     /**
      * Navigation tool to navigate to different screens
      */
     const navigation = useNavigation();
-
-    const searchFilterFunction = (target: Array<SearchObject>, text: string) => {
-        if (text) {
-            const newArray = target.filter((item: SearchObject) => item.title.toLowerCase().includes(text.toLowerCase()));
-            
-            console.log(...newArray);
-            setSuggestions(newArray);
-            setSearch(text);
-        } else {
-            setSuggestions(mainData);
-            setSearch(text);
-        }
-        console.log(suggestions);
-        console.log(search);
-    };
 
     return (
         <SafeAreaView style={styles.container} >
@@ -77,10 +32,10 @@ export default function SearchBarComponent() {
                 cancelIcon={{ color: 'white'}}
                 clearIcon={{ color: 'white'}}
                 searchIcon={{ size: 18, color: 'white' }}
-                onChangeText={(text: string) => searchFilterFunction(suggestions, text)}
+                onChangeText={(text: string) => setSearch(text)}
                 onFocus={() => navigation.navigate('SuggestionScreen')}
                 onCancel={() => navigation.navigate('LatestScreen')}
-                onClear={() => searchFilterFunction(suggestions, '')}
+                onClear={() => setSearch('')}
                 placeholder="Type here..."
                 value={search}
             />
