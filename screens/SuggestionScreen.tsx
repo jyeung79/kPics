@@ -4,7 +4,7 @@ import { ListItem } from 'react-native-elements';
 import { SearchObject, SearchState } from '../types';
 import { shallowEqual, useSelector } from 'react-redux';
 
-const DATA = [
+const MASTER_DATA = [
     {
         id: 1,
         title: 'TWICE',
@@ -35,13 +35,13 @@ const DATA = [
  * Should be a flatlist to display all suggestion items
  */
 export default function SuggestionScreen() {
-    const [suggestions, setSuggestions] = useState<SearchObject[]>(DATA);
+    const [suggestions, setSuggestions] = useState<SearchObject[]>(MASTER_DATA);
 
     const searchInput = useSelector((state : SearchState) => state.textInput);
     console.log(searchInput);
 
     useEffect(() => {
-        searchFilterFunction(suggestions, searchInput);
+        searchFilterFunction(MASTER_DATA, searchInput);
     }, [searchInput]);
 
     function searchFilterFunction(target: Array<SearchObject>, text: string) {
@@ -49,7 +49,7 @@ export default function SuggestionScreen() {
             const newArray = target.filter((item: SearchObject) => item.title.toLowerCase().includes(text.toLowerCase()));
             setSuggestions(newArray);
         } else {
-            setSuggestions(DATA);
+            setSuggestions(MASTER_DATA);
         }
     };
     
