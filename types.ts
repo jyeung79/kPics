@@ -34,6 +34,7 @@ export type ProfileParamList = {
 export interface SearchObject {
     id: number,
     title: string,
+    avatarURL ?: string,
     twitterUsers?: String[],
     subtitle?: string,
 };
