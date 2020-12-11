@@ -33,7 +33,7 @@ const MASTER_DATA = [
         avatarURL:'https://beatsaver.com/cdn/444e/33584cfaa73b9b08c152498cdb7c02c955a2f3ba.jpg',
         twitterUsers : [],
         subtitle: 'My Favorite Girl Group'
-    }
+    },
 ];
 /**
  * Suggestion screen should show all the different suggestions for different results or suggestion types
