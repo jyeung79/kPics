@@ -16,7 +16,7 @@ const INITIAL_STATE: SearchState = {
     searchItem: {
         id: 1,
         title: 'TWICE',
-        twitterUsers : [],
+        twitterUsers : ['1124708249188483072', '1333815755465314306', '1333815691665756162'],
         subtitle:'The most popular Girl Group in Korea',
     }
 };
