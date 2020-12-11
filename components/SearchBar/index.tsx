@@ -3,7 +3,8 @@ import { StyleSheet, TextInput, Animated, TouchableOpacity, Platform, FlatList, 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SearchBar } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
-import { SearchObject } from '../../types';
+import { SearchObject, SearchState } from '../../types';
+import { useDispatch, useSelector } from 'react-redux';
 import useColorScheme from '../../hooks/useColorScheme';
 
 /**
@@ -13,10 +14,17 @@ import useColorScheme from '../../hooks/useColorScheme';
 
 export default function SearchBarComponent() {
     const [search, setSearch] = useState('');
+
+    const dispatch = useDispatch();
+    const textInput = useSelector((state: SearchState) => state.textInput);
     /**
      * Navigation tool to navigate to different screens
      */
     const navigation = useNavigation();
+    
+    const TextHandler = (text:string) => {
+        dispatch({ type: 'UPDATE_SEARCH', payload: text });
+    }
 
     return (
         <SafeAreaView style={styles.container} >
@@ -32,12 +40,12 @@ export default function SearchBarComponent() {
                 cancelIcon={{ color: 'white'}}
                 clearIcon={{ color: 'white'}}
                 searchIcon={{ size: 18, color: 'white' }}
-                onChangeText={(text: string) => setSearch(text)}
+                onChangeText={(text: string) => TextHandler(text)}
                 onFocus={() => navigation.navigate('SuggestionScreen')}
                 onCancel={() => navigation.navigate('LatestScreen')}
-                onClear={() => setSearch('')}
+                onClear={() => TextHandler('')}
                 placeholder="Type here..."
-                value={search}
+                value={textInput}
             />
         </SafeAreaView>
     );
