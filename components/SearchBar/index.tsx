@@ -22,7 +22,7 @@ export default function SearchBarComponent() {
      */
     const navigation = useNavigation();
     
-    const TextHandler = (text:string) => {
+    const textHandler = (text:string) => {
         dispatch({ type: 'UPDATE_SEARCH', payload: text });
     }
 
@@ -40,10 +40,9 @@ export default function SearchBarComponent() {
                 cancelIcon={{ color: 'white'}}
                 clearIcon={{ color: 'white'}}
                 searchIcon={{ size: 18, color: 'white' }}
-                onChangeText={(text: string) => TextHandler(text)}
+                onChangeText={(text: string) => textHandler(text)}
                 onFocus={() => navigation.navigate('SuggestionScreen')}
-                onCancel={() => navigation.navigate('LatestScreen')}
-                onClear={() => TextHandler('')}
+                onClear={() => textHandler('')}
                 placeholder="Type here..."
                 value={textInput}
             />

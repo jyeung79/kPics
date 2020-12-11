@@ -7,15 +7,13 @@
  * 
  * LayoutAnimation API to make layout animation changes look good
  */
-import { StyleSheet, Image, Animated, RefreshControl, TouchableOpacity } from 'react-native';
+import { StyleSheet, Image, Text, View, FlatList, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { initialWindowMetrics } from 'react-native-safe-area-context';
 import getTweets from '../utils/twitterAPI';
-import { Text, View, FlatList } from '../components/Themed';
+import { SearchState } from '../types';
+import { useSelector } from 'react-redux';
 
 const PAGE_SIZE = 5;
-
-let tweets: String[] = ['1124708249188483072', '1333815755465314306', '1333815691665756162', '1330149509465333762', '1328696475195375617']
 
 const Item = (props : {photo: string, onPress(): void}) => (
   <TouchableOpacity 
@@ -53,20 +51,26 @@ export default function LatestScreen() {
   const [modalVisible, showModal] = useState(false);
 
   /**
+   * Redux State of searchItem object
+   */
+  const requestedTweets: String[] = useSelector((state: SearchState) => state.searchItem.twitterUsers);
+  console.log(requestedTweets);
+
+  /**
    *  Fetch incoming Tweet data using useEffect
    * https://medium.com/javascript-in-plain-english/how-to-use-async-function-in-react-hook-useeffect-typescript-js-6204a788a435
    */
   useEffect(() => {
+    // Fetch the new tweets when requestedTweets changes
     (async function incomingTweet() {
       let allTweets : TweetMediaList = [];
-      for (const item of tweets) {
+      for (const item of requestedTweets) {
         const incomingTweets = await getTweets<TweetMediaList>("https://api.twitter.com/2/tweets/" + item + "?expansions=attachments.media_keys&media.fields=url,height,width");
         allTweets.push(...incomingTweets);
       }
-      console.log(allTweets);
       setPhotos(allTweets);
     })();
-  }, []);
+  }, [requestedTweets]);
 
   const renderItem = (props: { item: TweetMedia }) => (
       <Item 

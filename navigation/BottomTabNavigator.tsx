@@ -104,7 +104,7 @@ function GalleryTabNavigator() {
     <GalleryTab.Screen
         name="SuggestionScreen"
         component={SuggestionScreen}
-        options={{}}
+        options={{ title: 'Suggestions' }}
     />
   </GalleryTab.Navigator>
   )

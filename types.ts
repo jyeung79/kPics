@@ -41,6 +41,7 @@ export interface SearchObject {
 
 export interface SearchState {
   textInput: string,
+  suggestions: SearchObject[],
   searchItem: SearchObject
 }
 /** 
