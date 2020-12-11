@@ -7,11 +7,9 @@
  * 
  * LayoutAnimation API to make layout animation changes look good
  */
-import { StyleSheet, Image, Animated, RefreshControl, TouchableOpacity } from 'react-native';
+import { StyleSheet, Image, Text, View, FlatList, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { initialWindowMetrics } from 'react-native-safe-area-context';
 import getTweets from '../utils/twitterAPI';
-import { Text, View, FlatList } from '../components/Themed';
 import { SearchState } from '../types';
 import { useSelector } from 'react-redux';
 

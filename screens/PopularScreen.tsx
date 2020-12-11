@@ -1,95 +1,94 @@
 /**
- * Documentation for Popular Screen: Follow the instagram-firebase app
+ * Documentation for Latest Screen: Follow the instagram-firebase app
  * 
  * Use a Flatlist that loads data with actions at the top and bottom
- * 
  * Load More
- * 
  * Add Pull-to-refresh
  * 
  * LayoutAnimation API to make layout animation changes look good
  */
+import { StyleSheet, Image, Text, View, FlatList, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Image, LayoutAnimation, RefreshControl } from 'react-native';
-import { initialWindowMetrics } from 'react-native-safe-area-context';
-
-import { Text, View, FlatList } from '../components/Themed';
+import getTweets from '../utils/twitterAPI';
+import { SearchState } from '../types';
+import { useSelector } from 'react-redux';
 
 const PAGE_SIZE = 5;
 
-interface PhotoType {
-  id: number;
-  title: string;
-  photo?: string;
-};
-
-const ANIME_DATA: PhotoType[] = [
-  {
-    id: 20,
-    title:'Naruto',
-    photo: 'https://cdn.myanimelist.net/images/anime/13/17405.jpg',
-  },
-  {
-    id: 269,
-    title:'Bleach',
-    photo: 'https://cdn.myanimelist.net/images/anime/3/40451.jpg',
-  },
-  {
-    id: 21,
-    title:'One Piece',
-    photo: 'https://cdn.myanimelist.net/images/anime/6/73245.jpg',
-  },
-  {
-    id:38000,
-    title:'KNY'
-  },
-  {
-    id: 16498,
-    title:'Shingeki No Kyojin'
-  },
-  {
-    id: 40052,
-    title:'The Great Pretender'
-  },
-  {
-    id: 7,
-    title:'Inuyasha'
-  },
-  {
-    id: 8,
-    title:'Fullmetal Alchemist Brotherhood'
-  },
-];
-
-
-const Item = (props : {title: string, id: number, photo?: string }) => (
-  <View>
-    <Text style={styles.itemTitle}>{props.title}</Text>
-    <Text style={styles.itemTitle}>{props.id}</Text>
-    <Image style={styles.image} source={{uri: props.photo}}/>
-  </View>
+const Item = (props : {photo: string, onPress(): void}) => (
+  <TouchableOpacity 
+    style={styles.imageContainer}
+    activeOpacity={0.8}
+    delayPressIn={80}
+    accessibilityRole='imagebutton'
+    onPress={props.onPress}
+  >
+    <Image 
+      style={styles.image}
+      source={{
+        uri: props.photo,
+        cache: 'default'
+      }}
+      resizeMode='cover'
+    />
+  </TouchableOpacity>
 );
 
-export default function PopularScreen() {
-  const [loading, setLoading] = useState(false);
-  const [posts, setPosts] = useState([]);
+interface TweetMediaList extends Array<TweetMedia>{};
 
-  const renderItem = (props: { item: PhotoType }) => (
-    <Item title={props.item.title} id={props.item.id} photo={props.item.photo}/>
+interface TweetMedia {
+    height: number,
+    media_key: string,
+    type: string, 
+    url: string,
+    width: number  
+};
+
+export default function LatestScreen() {
+  const [loading, setLoading] = useState(true);
+  const [photos, setPhotos] = useState<TweetMediaList>();
+  const [search, setSearch] = useState('Dahyun');
+  const [modalVisible, showModal] = useState(false);
+
+  /**
+   * Redux State of searchItem object
+   */
+  const requestedTweets: String[] = useSelector((state: SearchState) => state.searchItem.twitterUsers);
+  console.log(requestedTweets);
+
+  /**
+   *  Fetch incoming Tweet data using useEffect
+   * https://medium.com/javascript-in-plain-english/how-to-use-async-function-in-react-hook-useeffect-typescript-js-6204a788a435
+   */
+  useEffect(() => {
+    // Fetch the new tweets when requestedTweets changes
+    (async function incomingTweet() {
+      let allTweets : TweetMediaList = [];
+      for (const item of requestedTweets) {
+        const incomingTweets = await getTweets<TweetMediaList>("https://api.twitter.com/2/tweets/" + item + "?expansions=attachments.media_keys&media.fields=url,height,width");
+        allTweets.push(...incomingTweets);
+      }
+      setPhotos(allTweets);
+    })();
+  }, [requestedTweets]);
+
+  const renderItem = (props: { item: TweetMedia }) => (
+      <Item 
+        photo={props.item.url}
+        onPress={() => showModal(!modalVisible)}
+      />
   );
-  LayoutAnimation.easeInEaseOut();
   return (
     <View style={styles.container}>
       <FlatList
-        data={ANIME_DATA}
+        data={photos}
         style={styles.photos}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.media_key.slice(2).toString()}
       />
     </View>
   );
-}
-
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -103,21 +102,24 @@ const styles = StyleSheet.create({
     color:"#e5989b"
   },
   photos: {
-    marginHorizontal: 10,
   },
-  item: {
-    backgroundColor: '#f9c3ff',
-    padding: 20,
+  imageContainer: {
+    height: 517,
+    width: 361,
     marginVertical: 2,
-    marginHorizontal: 0,
+    marginLeft: 5,
+    marginRight: 5,
+    borderRadius: 10,
+
     alignSelf: 'center',
   },
   itemTitle: {
     fontSize: 28,
   },
   image: {
-    resizeMode: 'center' ,
-    height: 400,
-    width: 400,
+    height: '100%',
+    width: '100%',
+    resizeMode: 'cover',
+    borderRadius: 10,
   }
 });

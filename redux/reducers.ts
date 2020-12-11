@@ -22,7 +22,6 @@ const INITIAL_STATE: SearchState = {
         subtitle:'The most popular Girl Group in Korea',
     }
 };
-
 /**
  * Redux does a shallow-compare the result object vs the result object
  * If the rewrite redux store fields has same values, it would not trigger re-render

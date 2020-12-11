@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, FlatList, StyleSheet } from 'react-native';
+import { View, FlatList, StyleSheet } from 'react-native';
 import { ListItem, Icon, Avatar } from 'react-native-elements';
 import { SearchObject, SearchState } from '../types';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
