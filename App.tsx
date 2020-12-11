@@ -1,7 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { NavigationContainer } from '@react-navigation/native';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import searchReducer from './redux/reducers';
 import 'react-native-gesture-handler';
 
 import useCachedResources from './hooks/useCachedResources';
@@ -15,6 +17,7 @@ import Navigation from './navigation';
  * Statusbar Docs 
  * https://docs.expo.io/versions/latest/sdk/status-bar/
  */
+const store = createStore(searchReducer);
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -25,8 +28,10 @@ export default function App() {
   } else {
     return (
       <SafeAreaProvider>
-        <StatusBar style={colorScheme === 'light' ? 'dark' : 'light'} translucent={false}/>
-        <Navigation colorScheme={colorScheme} />
+        <Provider store={store}>
+          <StatusBar style={colorScheme === 'light' ? 'dark' : 'light'} translucent={false}/>
+          <Navigation colorScheme={colorScheme} />
+        </Provider>
       </SafeAreaProvider>
     );
   }

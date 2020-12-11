@@ -3,6 +3,7 @@ import { StyleSheet, TextInput, Animated, TouchableOpacity, Platform, FlatList, 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SearchBar } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
+import { SearchObject } from '../../types';
 import useColorScheme from '../../hooks/useColorScheme';
 
 const DATA = [
@@ -32,13 +33,6 @@ const DATA = [
     }
 ];
 
-interface SearchType {
-    id: number,
-    title: string,
-    twitterUsers?: Array<String>
-    subtitle?: string,
-}
-
 /**
  * Decided to have a different screen to show suggestions because it's too inconsistent and hard to have a dropdown menu
  * It should be easier to have a different page to show suggestions
@@ -46,17 +40,17 @@ interface SearchType {
 
 export default function SearchBarComponent() {
     const [search, setSearch] = useState('');
-    const [suggestions, setSuggestions] = useState<SearchType[]>(DATA);
-    const [mainData, setMainData] = useState<SearchType[]>(DATA);
+    const [suggestions, setSuggestions] = useState<SearchObject[]>(DATA);
+    const [mainData, setMainData] = useState<SearchObject[]>(DATA);
 
     /**
      * Navigation tool to navigate to different screens
      */
     const navigation = useNavigation();
 
-    const searchFilterFunction = (target: Array<SearchType>, text: string) => {
+    const searchFilterFunction = (target: Array<SearchObject>, text: string) => {
         if (text) {
-            const newArray = target.filter((item: SearchType) => item.title.toLowerCase().includes(text.toLowerCase()));
+            const newArray = target.filter((item: SearchObject) => item.title.toLowerCase().includes(text.toLowerCase()));
             
             console.log(...newArray);
             setSuggestions(newArray);
