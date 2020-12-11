@@ -42,7 +42,6 @@ export default function SearchBarComponent() {
                 searchIcon={{ size: 18, color: 'white' }}
                 onChangeText={(text: string) => textHandler(text)}
                 onFocus={() => navigation.navigate('SuggestionScreen')}
-                onCancel={() => navigation.navigate('LatestScreen')}
                 onClear={() => textHandler('')}
                 placeholder="Type here..."
                 value={textInput}

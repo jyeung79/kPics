@@ -13,23 +13,11 @@ export default function SuggestionScreen() {
     const [suggestions, setSuggestions] = useState<SearchObject[]>(MASTER_DATA);
 
     const searchInput = useSelector((state : SearchState) => state.textInput);
+    const suggestionList = useSelector((state: SearchState) => state.suggestions);
     const dispatch = useDispatch();
     console.log(searchInput);
 
     const navigation = useNavigation();
-
-    useEffect(() => {
-        searchFilterFunction(MASTER_DATA, searchInput);
-    }, [searchInput]);
-
-    function searchFilterFunction(target: Array<SearchObject>, text: string) {
-        if (text) {
-            const newArray = target.filter((item: SearchObject) => item.title.toLowerCase().includes(text.toLowerCase()));
-            setSuggestions(newArray);
-        } else {
-            setSuggestions(MASTER_DATA);
-        }
-    };
 
     function onPressHandler(props: {item: SearchObject}) {
         dispatch({ type: 'UPDATE_SEARCH', payload: props.item.title});
@@ -40,8 +28,8 @@ export default function SuggestionScreen() {
     return (
         <View>
             <FlatList
-                data={suggestions}
-                extraData={suggestions}
+                data={suggestionList}
+                extraData={suggestionList}
                 style={styles.container}
                 renderItem={(props: { item: SearchObject}) => (
                     <ListItem 

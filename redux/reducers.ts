@@ -1,5 +1,6 @@
-import { Constants } from 'expo-constants';
+import MASTER_DATA from '../constants/Groups';
 import {
+    SearchObject,
     SearchState,
     SearchActionTypes,
     UPDATE_SEARCH,
@@ -13,6 +14,7 @@ import {
  */
 const INITIAL_STATE: SearchState = {
     textInput: '',
+    suggestions: MASTER_DATA,
     searchItem: {
         id: 1,
         title: 'TWICE',
@@ -28,22 +30,26 @@ const INITIAL_STATE: SearchState = {
  * https://stackoverflow.com/questions/40386128/how-does-a-redux-connected-component-know-when-to-re-render
  * 
  */
-
 const searchReducer = (state = INITIAL_STATE, action: SearchActionTypes) => {
     switch (action.type) {
         case UPDATE_SEARCH:
+            // Add filtering of suggestions here
+            const filteredSuggestions = MASTER_DATA.filter((item: SearchObject) => item.title.toLowerCase().includes(action.payload.toLowerCase()));
             return {
                 textInput: action.payload,
+                suggestions: filteredSuggestions,
                 searchItem: {...state.searchItem}
             };
         case CLEAR_SEARCH:
             return {
                 textInput: action.payload,
+                suggestions: MASTER_DATA,
                 searchItem: {...state.searchItem}
             };
         case SUBMIT_SEARCH:
             return {
                 textInput: state.textInput,
+                suggestions: [action.payload],
                 searchItem: action.payload
             }
         default:
