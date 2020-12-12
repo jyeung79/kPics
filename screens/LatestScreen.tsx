@@ -13,7 +13,7 @@ import getTweets from '../utils/twitterAPI';
 import { SearchState } from '../types';
 import { useSelector } from 'react-redux';
 
-const PAGE_SIZE = 5;
+const INTITIAL_IMAGES_NUM = 2;
 
 const Item = (props : {photo: string, onPress(): void}) => (
   <TouchableOpacity 
@@ -62,7 +62,6 @@ export default function LatestScreen() {
    * https://medium.com/javascript-in-plain-english/how-to-use-async-function-in-react-hook-useeffect-typescript-js-6204a788a435
    */
   useEffect(() => {
-    scrollToTop(); // Scrolls to the top of the FlatList when a new Search Term is applied
     // Fetch the new tweets when requestedTweets changes
     (async function incomingTweet() {
       let allTweets : TweetMediaList = [];
@@ -72,11 +71,17 @@ export default function LatestScreen() {
       }
       setPhotos(allTweets);
     })();
+    scrollToTop();
   }, [requestedTweets]);
 
+  /**
+   * Scroll to the top of the flatlist using scrollToOffset
+   * scrollToIndex gave a weird error of maximum index: -1 when app is initialized
+   * Same functionality as new search term scrolled to top of tweets
+   */
   function scrollToTop() {
     if (flatListRef && flatListRef.current) {
-        flatListRef.current.scrollToIndex({animated: true, index: 0, viewOffset: 0, viewPosition: 0});
+        flatListRef.current.scrollToOffset({offset: 0,animated: true});
     }
   };
 
@@ -91,7 +96,7 @@ export default function LatestScreen() {
       <FlatList
         ref={flatListRef}
         data={photos}
-        initialNumToRender={3}
+        initialNumToRender={INTITIAL_IMAGES_NUM } // Reduce intialization time to load rendered on screen
         style={styles.photos}
         renderItem={renderItem}
         keyExtractor={(item) => item.media_key.slice(2).toString()}
