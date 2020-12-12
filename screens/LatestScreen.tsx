@@ -47,7 +47,6 @@ interface TweetMedia {
 export default function LatestScreen() {
   const [loading, setLoading] = useState(true);
   const [photos, setPhotos] = useState<TweetMediaList>();
-  const [search, setSearch] = useState('Dahyun');
   const [modalVisible, showModal] = useState(false);
 
   /**

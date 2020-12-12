@@ -10,6 +10,7 @@ import { SearchObject } from '../types';
  * }
  * 
  * twitterUsers will be array of Tweets for testing purposes
+ * Should I add individual members into the data as well???
  */
 const GroupData: SearchObject[] = [
     {
@@ -17,11 +18,10 @@ const GroupData: SearchObject[] = [
         title: 'TWICE',
         avatarURL: 'https://c-sf.smule.com/rs-s78/arr/41/c6/86b96920-8110-4632-ad31-2330e0872a70.jpg',
         twitterUsers : [
-            '1124708249188483072',
-            '1333815755465314306',
-            '1333815691665756162',
-            '1330149509465333762',
-            '1328696475195375617',
+            '1337742281605046272',
+            '1337770959038795777',
+            '1337556043572842496',
+            '1337614591661051905',
         ],
         subtitle:'South Korean JYP Girl Group',
     },
@@ -48,13 +48,13 @@ const GroupData: SearchObject[] = [
     },
     {
         id: 4,
-        title: 'Izone',
+        title: 'Iz*one',
         avatarURL:'https://beatsaver.com/cdn/444e/33584cfaa73b9b08c152498cdb7c02c955a2f3ba.jpg',
         twitterUsers : [
-            '1336959601615376384',
-            '1334872355735101440',
+            '1337727701239533575',
+            '1337581045865095169',
+            '1337070367337291780',
             '1336962582377271296',
-            '1336506729727594499',
         ],
         subtitle: 'My Favorite Girl Group'
     },
@@ -113,6 +113,70 @@ const GroupData: SearchObject[] = [
         avatarURL: 'https://pbs.twimg.com/profile_images/684635037501792258/oiY7-ThW_400x400.jpg',
         twitterUsers: [],
         subtitle: 'South Korean JYP Girl Group'
+    },
+    {
+        id: 13,
+        title: 'Sana Minatozaki',
+        avatarURL: 'https://cdn140.picsart.com/307592279145201.jpg?type=webp&to=crop&r=256',
+        twitterUsers: [
+            '1337676254800015360',
+            '1337637263556034563',
+            '1337540566318415872',
+        ],
+        subtitle: 'Girl Group Member of TWICE'
+    },
+    {
+        id: 14,
+        title: 'Im Nayeon',
+        avatarURL: 'https://i.pinimg.com/564x/fe/b2/7d/feb27dd3e11095dbc08a77997d0e6dd1.jpg',
+        twitterUsers: [
+            '1337667329229000704',
+            '1337743793399820288',
+            '1337338916907577345',
+            '1336794359300177921',
+        ],
+        subtitle: 'Girl Group Member of TWICE'
+    },
+    {
+        id: 15,
+        title: 'Kim Dahyun',
+        avatarURL: 'https://c-sf.smule.com/rs-s-sg-1/sing/performance/cover/37/77/86c414bf-ca3e-4522-9158-6a2412c9b336.jpg',
+        twitterUsers: [
+            '1124708249188483072',
+            '1333815755465314306',
+            '1333815691665756162',
+            '1330149509465333762',
+            '1328696475195375617',
+        ],
+        subtitle: 'Girl Group Member of TWICE'
+    },
+    {
+        id: 16,
+        title: 'Kim Minju',
+        avatarURL: 'https://a.thumbs.redditmedia.com/p68DuzJtIQq-ZWPObYO7MlADrYc9codbbJc2GWlBnF8.png',
+        twitterUsers: [
+            '1337777319109414913',
+            '1337071613276286983',
+            '1171510068656762884',
+            '1337697054592704512',
+            '1337070367337291780',
+            '1336959601615376384',
+            '1334872355735101440',
+        ],
+        subtitle: 'Girl Group Member of Iz*one'
+    },
+    {
+        id: 17,
+        title: 'Kim Chaewon',
+        avatarURL: 'https://cdn130.picsart.com/319963484401201.jpg?type=webp&to=crop&r=256',
+        twitterUsers: [
+            '1337660752631459841',
+            '1337769364246892546',
+            '1336506729727594499',
+            '1337336560719593472',
+            '1336922514287517698',
+        ],
+        subtitle: 'Girl Group Member of Iz*one'
     },
 ];
 
