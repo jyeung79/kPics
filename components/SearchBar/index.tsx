@@ -15,8 +15,8 @@ import useColorScheme from '../../hooks/useColorScheme';
 export default function SearchBarComponent() {
     const [search, setSearch] = useState('');
 
-    const dispatch = useDispatch();
-    const textInput = useSelector((state: SearchState) => state.textInput);
+    const dispatch = useDispatch();    
+    const { textInput, suggestions} = useSelector((state: SearchState) => state);
     /**
      * Navigation tool to navigate to different screens
      */
@@ -25,6 +25,14 @@ export default function SearchBarComponent() {
     const textHandler = (text:string) => {
         dispatch({ type: 'UPDATE_SEARCH', payload: text });
     }
+
+    const onSubmitHandler = () => {
+        if (suggestions === undefined || suggestions.length > 0) {
+            dispatch({ type: 'UPDATE_SEARCH', payload: suggestions[0].title});
+            dispatch({ type: 'SUBMIT_SEARCH', payload:suggestions[0] });
+            navigation.navigate('LatestScreen');
+        }
+    };
 
     return (
         <SafeAreaView style={styles.container} >
@@ -43,6 +51,7 @@ export default function SearchBarComponent() {
                 onChangeText={(text: string) => textHandler(text)}
                 onFocus={() => navigation.navigate('SuggestionScreen')}
                 onClear={() => textHandler('')}
+                onSubmitEditing={() => onSubmitHandler()}
                 placeholder="Type here..."
                 value={textInput}
             />
