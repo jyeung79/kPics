@@ -4,7 +4,6 @@ import {
     SearchState,
     SearchActionTypes,
     UPDATE_SEARCH,
-    CLEAR_SEARCH,
     SUBMIT_SEARCH,
 } from '../types';
 
@@ -43,12 +42,6 @@ const searchReducer = (state = INITIAL_STATE, action: SearchActionTypes) => {
             return {
                 textInput: action.payload,
                 suggestions: filteredSuggestions,
-                searchItem: {...state.searchItem}
-            };
-        case CLEAR_SEARCH:
-            return {
-                textInput: action.payload,
-                suggestions: MASTER_DATA,
                 searchItem: {...state.searchItem}
             };
         case SUBMIT_SEARCH:
