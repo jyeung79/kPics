@@ -8,7 +8,7 @@
  * LayoutAnimation API to make layout animation changes look good
  */
 import { StyleSheet, Image, Text, View, FlatList, TouchableOpacity } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import getTweets from '../utils/twitterAPI';
 import { SearchState } from '../types';
 import { useSelector } from 'react-redux';
@@ -49,6 +49,8 @@ export default function LatestScreen() {
   const [photos, setPhotos] = useState<TweetMediaList>();
   const [modalVisible, showModal] = useState(false);
 
+  const flatListRef = useRef<FlatList>(null);
+
   /**
    * Redux State of searchItem object
    */
@@ -60,6 +62,7 @@ export default function LatestScreen() {
    * https://medium.com/javascript-in-plain-english/how-to-use-async-function-in-react-hook-useeffect-typescript-js-6204a788a435
    */
   useEffect(() => {
+    scrollToTop(); // Scrolls to the top of the FlatList when a new Search Term is applied
     // Fetch the new tweets when requestedTweets changes
     (async function incomingTweet() {
       let allTweets : TweetMediaList = [];
@@ -71,6 +74,12 @@ export default function LatestScreen() {
     })();
   }, [requestedTweets]);
 
+  function scrollToTop() {
+    if (flatListRef && flatListRef.current) {
+        flatListRef.current.scrollToIndex({animated: true, index: 0, viewOffset: 0, viewPosition: 0});
+    }
+  };
+
   const renderItem = (props: { item: TweetMedia }) => (
       <Item 
         photo={props.item.url}
@@ -80,7 +89,9 @@ export default function LatestScreen() {
   return (
     <View style={styles.container}>
       <FlatList
+        ref={flatListRef}
         data={photos}
+        initialNumToRender={3}
         style={styles.photos}
         renderItem={renderItem}
         keyExtractor={(item) => item.media_key.slice(2).toString()}

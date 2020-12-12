@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import { ListItem, Icon, Avatar } from 'react-native-elements';
 import { SearchObject, SearchState } from '../types';
@@ -15,7 +15,6 @@ export default function SuggestionScreen() {
     const searchInput = useSelector((state : SearchState) => state.textInput);
     const suggestionList = useSelector((state: SearchState) => state.suggestions);
     const dispatch = useDispatch();
-    console.log(searchInput);
 
     const navigation = useNavigation();
 
@@ -23,7 +22,7 @@ export default function SuggestionScreen() {
         dispatch({ type: 'UPDATE_SEARCH', payload: props.item.title});
         dispatch({ type: 'SUBMIT_SEARCH', payload: props.item});
         navigation.navigate('LatestScreen');
-    }
+    };
     
     return (
         <View>
