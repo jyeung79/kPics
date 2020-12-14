@@ -8,12 +8,12 @@
  * LayoutAnimation API to make layout animation changes look good
  */
 import { StyleSheet, Image, Text, View, FlatList, TouchableOpacity } from 'react-native';
-import React, { useState, useEffect } from 'react';
-import getTweets from '../utils/twitterAPI';
-import { SearchState } from '../types';
+import React, { useState, useEffect, useRef } from 'react';
+import getTweet from '../utils/twitterAPI';
+import { SearchState, TweetMedia, TweetMediaList } from '../types';
 import { useSelector } from 'react-redux';
 
-const PAGE_SIZE = 5;
+const INTITIAL_IMAGES_NUM = 2;
 
 const Item = (props : {photo: string, onPress(): void}) => (
   <TouchableOpacity 
@@ -34,43 +34,45 @@ const Item = (props : {photo: string, onPress(): void}) => (
   </TouchableOpacity>
 );
 
-interface TweetMediaList extends Array<TweetMedia>{};
-
-interface TweetMedia {
-    height: number,
-    media_key: string,
-    type: string, 
-    url: string,
-    width: number  
-};
-
-export default function LatestScreen() {
+export default function PopularScreen() {
   const [loading, setLoading] = useState(true);
   const [photos, setPhotos] = useState<TweetMediaList>();
-  const [search, setSearch] = useState('Dahyun');
   const [modalVisible, showModal] = useState(false);
 
-  /**
-   * Redux State of searchItem object
-   */
-  const requestedTweets: String[] = useSelector((state: SearchState) => state.searchItem.twitterUsers);
-  console.log(requestedTweets);
+  const flatListRef = useRef<FlatList>(null);
 
+  //Redux State of searchItem object
+  const requestedTweets: string[] = useSelector((state: SearchState) => state.searchItem.twitterUsers);
+  
   /**
    *  Fetch incoming Tweet data using useEffect
    * https://medium.com/javascript-in-plain-english/how-to-use-async-function-in-react-hook-useeffect-typescript-js-6204a788a435
    */
   useEffect(() => {
-    // Fetch the new tweets when requestedTweets changes
     (async function incomingTweet() {
-      let allTweets : TweetMediaList = [];
-      for (const item of requestedTweets) {
-        const incomingTweets = await getTweets<TweetMediaList>("https://api.twitter.com/2/tweets/" + item + "?expansions=attachments.media_keys&media.fields=url,height,width");
-        allTweets.push(...incomingTweets);
-      }
+      let allTweets : TweetMediaList = [];      
+      try {
+          const incomingTweets = await getTweet<TweetMediaList>(requestedTweets.join(','));
+          //console.log(incomingTweets);
+          allTweets = incomingTweets.length > 1 ? [...incomingTweets] : [];
+        } catch (err) {
+          console.error(err);
+        };
       setPhotos(allTweets);
     })();
+    scrollToTop();
   }, [requestedTweets]);
+
+  /**
+   * Scroll to the top of the flatlist using scrollToOffset
+   * scrollToIndex gave a weird error of maximum index: -1 when app is initialized
+   * Same functionality as new search term scrolled to top of tweets
+   */
+  function scrollToTop() {
+    if (flatListRef && flatListRef.current) {
+        flatListRef.current.scrollToOffset({offset: 0,animated: true});
+    }
+  };
 
   const renderItem = (props: { item: TweetMedia }) => (
       <Item 
@@ -81,7 +83,9 @@ export default function LatestScreen() {
   return (
     <View style={styles.container}>
       <FlatList
+        ref={flatListRef}
         data={photos}
+        initialNumToRender={INTITIAL_IMAGES_NUM } // Reduce intialization time to load rendered on screen
         style={styles.photos}
         renderItem={renderItem}
         keyExtractor={(item) => item.media_key.slice(2).toString()}

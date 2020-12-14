@@ -34,6 +34,7 @@ export default function SuggestionScreen() {
                     <ListItem 
                         key={props.item.id} 
                         bottomDivider
+                        containerStyle={styles.listItemContainer}
                         onPress={() => onPressHandler({...props})} 
                     >
                         <Avatar
@@ -43,8 +44,8 @@ export default function SuggestionScreen() {
                             source={{uri: props.item.avatarURL}}
                         />
                         <ListItem.Content>
-                            <ListItem.Title>{props.item.title}</ListItem.Title>
-                            <ListItem.Subtitle>{props.item.subtitle}</ListItem.Subtitle>
+                            <ListItem.Title style={styles.title}>{props.item.title}</ListItem.Title>
+                            <ListItem.Subtitle style={styles.subtitle}>{props.item.subtitle}</ListItem.Subtitle>
                         </ListItem.Content>
                     </ListItem>
                 )}
@@ -56,6 +57,16 @@ export default function SuggestionScreen() {
 
 const styles = StyleSheet.create({
     container: {
-        width: '100%'
-    } 
+        width: '100%',
+        backgroundColor: 'black',
+    },
+    listItemContainer: {
+        backgroundColor: 'black',
+    },
+    title: {
+        color: 'white',
+    },
+    subtitle: {
+        color: '#8d99ae'
+    }
 });
