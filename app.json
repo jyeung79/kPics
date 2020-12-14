@@ -10,9 +10,9 @@
     "githubUrl": "https://github.com/jyeung79/kPics",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/splash-2.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#2E2045"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -26,11 +26,11 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#fff"
       }
     },
     "web": {
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/icon.png"
     }
   }
 }
