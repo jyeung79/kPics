@@ -28,6 +28,19 @@ export type ProfileParamList = {
 };
 
 /**
+ * Types for Tweet Media Object
+ */
+export interface TweetMediaList extends Array<TweetMedia>{};
+
+export interface TweetMedia {
+    height: number,
+    media_key: string,
+    type: string, 
+    url: string,
+    width: number  
+};
+
+/**
  * Typechecking for Redux actions, reducers, objects
  * Might separate these types to other page
  */

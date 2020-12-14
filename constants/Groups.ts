@@ -41,8 +41,9 @@ const GroupData: SearchObject[] = [
         avatarURL:'https://styles.redditmedia.com/t5_9kzpy/styles/profileIcon_bepvkcv7qrq41.jpg?width=256&height=256&crop=256:256,smart&s=15ee83ce0eb0cae7bfe78008475316136f31a867',
         twitterUsers : [
             '1337247536239677440',
-            '1337281845956775936',
-            '1337281223614373888',
+            '1338190730662129665',
+            '1337779003759894529',
+            '1337767980864716800',
         ],
         subtitle: 'South Korean BigHit Boy Group',
     },
