@@ -2,10 +2,12 @@
   "expo": {
     "name": "kPics",
     "slug": "kPics",
+    "description": "Image viewing app that displays relevant pictures from Twitter of your favorite Kpop celebrities.",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
+    "githubUrl": "https://github.com/jyeung79/kPics",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
