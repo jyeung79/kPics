@@ -14,10 +14,16 @@ import {
 const INITIAL_STATE: SearchState = {
     textInput: '',
     suggestions: MASTER_DATA,
-    searchItem:     {
+    searchItem: {
         id: 1,
         title: 'TWICE',
         avatarURL: 'https://c-sf.smule.com/rs-s78/arr/41/c6/86b96920-8110-4632-ad31-2330e0872a70.jpg',
+        favoriteTweets: [
+            '1337742281605046272',
+            '1337770959038795777',
+            '1337556043572842496',
+            '1337614591661051905',
+        ],
         twitterUsers : [
             '1337742281605046272',
             '1337770959038795777',

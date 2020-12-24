@@ -21,28 +21,57 @@ export default async function getTweet<T>(
     console.log('Run Once already');
    let request = 'https://api.twitter.com/2/tweets?ids=' + tweets + '&expansions=attachments.media_keys&media.fields=url,height,width';
     console.log(request);
-
     try {
         const response = await fetch(request ,{
             headers: myHeaders,
         });
-        //console.log(response); //Why did this give an error 'There was a problem sending log messages to your dev environment'
-
         const body = await response.json();
+        console.log(body);
+
         return body.includes.media;
     } catch (err) {
         return err;
     }
 };
 
+/**
+ * TODO Add functionality to get latest post from user
+ * 
+ * Returns the data of the users latest 10 Tweets
+ * @param userID
+ */
 async function getUserTweets<T>(
     userID: string
 ): Promise<T> {
     let request = 'https://api.twitter.com/2/tweets/search/recent?query=from:' + userID + '?expansions=attachments.media_keys&media.fields=url,height,width';
+    
+    try {
+        const response = await fetch(request, {
+            headers: myHeaders
+        });
+        const body = await response.json();
+        return body.data;
+    } catch (err) {
+        return err;
+    }
+};
 
-    const response = await fetch(request, {
-        headers: myHeaders
-    });
-    const body = await response.json();
-    return body.data;
-}
+/**
+ * TODO Add functionality to pull pictures from trending images from search terms
+ * @param search 
+ */
+async function getTrending<T>(
+    search: string
+): Promise<T> {
+    let request = 'https://api.twitter.com/2/tweets/search/recent?query=' + search + '&max_results=5&tweet.fields=attachments&expansions=attachments.media_keys&media.fields=url,height,width';
+
+    try {
+        const response = await fetch(request, {
+            headers: myHeaders
+        });
+        const body = await response.json();
+        return body.data; 
+    } catch (err) {
+        return err;
+    }
+};

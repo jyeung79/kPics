@@ -48,7 +48,8 @@ export interface SearchObject {
     id: number,
     title: string,
     avatarURL ?: string,
-    twitterUsers?: String[],
+    favoriteTweets ?: string[],
+    twitterUsers?: string[],
     subtitle?: string,
 };
 

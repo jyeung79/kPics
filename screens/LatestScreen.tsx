@@ -41,7 +41,7 @@ export default function LatestScreen() {
 
   const flatListRef = useRef<FlatList>(null);
 
-  const requestedTweets: string[] = useSelector((state: SearchState) => state.searchItem.twitterUsers);
+  const requestedTweets: string[] = useSelector((state: SearchState) => state.searchItem.favoriteTweets);
   /**
    *  Fetch incoming Tweet data using useEffect
    * https://medium.com/javascript-in-plain-english/how-to-use-async-function-in-react-hook-useeffect-typescript-js-6204a788a435
@@ -50,9 +50,11 @@ export default function LatestScreen() {
     (async function incomingTweet() {
       let allTweets : TweetMediaList = [];      
       try {
-          const incomingTweets = await getTweet<TweetMediaList>(requestedTweets.join(','));
-          //console.log(incomingTweets);
-          allTweets = incomingTweets.length > 1 ? [...incomingTweets] : [];
+          if (requestedTweets !== undefined) {
+            const incomingTweets = await getTweet<TweetMediaList>(requestedTweets.join(','));
+            //console.log(incomingTweets);
+            allTweets = incomingTweets.length > 1 ? [...incomingTweets] : [];
+          }
       } catch (err) {
           console.error(err);
       };
