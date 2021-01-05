@@ -9,7 +9,7 @@
  */
 import { StyleSheet, Image, Text, View, FlatList, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
-import getTweet from '../utils/twitterAPI';
+import { getTweet, getUserTweets } from '../utils/twitterAPI';
 import { SearchState, TweetMedia, TweetMediaList } from '../types';
 import { useSelector } from 'react-redux';
 
@@ -42,26 +42,22 @@ export default function LatestScreen() {
   const flatListRef = useRef<FlatList>(null);
 
   const requestedTweets: string[] = useSelector((state: SearchState) => state.searchItem.favoriteTweets);
+  const twitterUsers: string[] = useSelector((state: SearchState) => state.searchItem.twitterUsers);
   /**
    *  Fetch incoming Tweet data using useEffect
    * https://medium.com/javascript-in-plain-english/how-to-use-async-function-in-react-hook-useeffect-typescript-js-6204a788a435
    */
   useEffect(() => {
-    (async function incomingTweet() {
-      let allTweets : TweetMediaList = [];      
-      try {
-          if (requestedTweets !== undefined) {
-            const incomingTweets = await getTweet<TweetMediaList>(requestedTweets.join(','));
-            //console.log(incomingTweets);
-            allTweets = incomingTweets.length > 1 ? [...incomingTweets] : [];
-          }
-      } catch (err) {
-          console.error(err);
-      };
-      setPhotos(allTweets);
+    (async function incomingTweet() {    
+      if (twitterUsers !== undefined) {
+        let promiseArray = twitterUsers.map((user: string) => getUserTweets<TweetMediaList>(user));
+        const allTweets : TweetMediaList[] = await Promise.all(promiseArray);
+        setPhotos(allTweets.flat());
+      }
     })();
     scrollToTop();
-  }, [requestedTweets]);
+    console.log(photos);
+  }, [twitterUsers]);
 
   /**
    * Scroll to the top of the flatlist using scrollToOffset
@@ -70,7 +66,7 @@ export default function LatestScreen() {
    */
   function scrollToTop() {
     if (flatListRef && flatListRef.current) {
-        flatListRef.current.scrollToOffset({offset: 0,animated: true});
+        flatListRef.current.scrollToOffset({offset: 0, animated: true});
     }
   };
 
@@ -80,6 +76,7 @@ export default function LatestScreen() {
         onPress={() => showModal(!modalVisible)}
       />
   );
+
   return (
     <View style={styles.container}>
       <FlatList

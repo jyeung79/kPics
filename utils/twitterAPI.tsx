@@ -15,7 +15,7 @@ const myHeaders = new Headers({
  * Building queries for recent search endpoints https://developer.twitter.com/en/docs/twitter-api/tweets/search/integrate/build-a-rule
  * Exlore users tweets https://developer.twitter.com/en/docs/tutorials/explore-a-users-tweets
  */
-export default async function getTweet<T>(
+export async function getTweet<T>(
     tweets: string
 ): Promise<T> {
     console.log('Run Once already');
@@ -35,22 +35,22 @@ export default async function getTweet<T>(
 };
 
 /**
- * TODO Add functionality to get latest post from user
+ * TODO Keep the copy of the next_token so you can retrieve the next 10 Tweets when loading
  * 
  * Returns the data of the users latest 10 Tweets
  * @param userID
  */
-async function getUserTweets<T>(
+export async function getUserTweets<T>(
     userID: string
 ): Promise<T> {
-    let request = 'https://api.twitter.com/2/tweets/search/recent?query=from:' + userID + '?expansions=attachments.media_keys&media.fields=url,height,width';
-    
+    let request = 'https://api.twitter.com/2/tweets/search/recent?query=from:' + userID + '&expansions=attachments.media_keys&media.fields=preview_image_url,url,height,width';
     try {
         const response = await fetch(request, {
             headers: myHeaders
         });
         const body = await response.json();
-        return body.data;
+        //console.log(body.includes);
+        return body.includes.media; //Array of TweetMediaObjects
     } catch (err) {
         return err;
     }
@@ -60,7 +60,7 @@ async function getUserTweets<T>(
  * TODO Add functionality to pull pictures from trending images from search terms
  * @param search 
  */
-async function getTrending<T>(
+export async function getTrending<T>(
     search: string
 ): Promise<T> {
     let request = 'https://api.twitter.com/2/tweets/search/recent?query=' + search + '&max_results=5&tweet.fields=attachments&expansions=attachments.media_keys&media.fields=url,height,width';

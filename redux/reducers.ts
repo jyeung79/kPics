@@ -25,10 +25,8 @@ const INITIAL_STATE: SearchState = {
             '1337614591661051905',
         ],
         twitterUsers : [
-            '1337742281605046272',
-            '1337770959038795777',
-            '1337556043572842496',
-            '1337614591661051905',
+            'JYPETWICE',
+            'misayeon',
         ],
         subtitle:'South Korean JYP Girl Group',
     },
