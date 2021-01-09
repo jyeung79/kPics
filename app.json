@@ -10,7 +10,7 @@
     "githubUrl": "https://github.com/jyeung79/kPics",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash-2.png",
+      "image": "./assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#2E2045"
     },
