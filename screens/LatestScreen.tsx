@@ -50,9 +50,13 @@ export default function LatestScreen() {
   useEffect(() => {
     (async function incomingTweet() {    
       if (twitterUsers !== undefined) {
-        let promiseArray = twitterUsers.map((user: string) => getUserTweets<TweetMediaList>(user));
-        const allTweets : TweetMediaList[] = await Promise.all(promiseArray);
-        setPhotos(allTweets.flat());
+        let promiseArray = twitterUsers.map((user: string) => getUserTweets<TweetMediaList>(user));         
+        try {
+          const allTweets : TweetMediaList[] = await Promise.all(promiseArray);
+          setPhotos(allTweets.flat());
+        } catch(err) {
+          console.error(err);
+        }
       }
     })();
     scrollToTop();
