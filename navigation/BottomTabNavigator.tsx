@@ -24,7 +24,7 @@ export default function BottomTabNavigator() {
     <BottomTab.Navigator
       initialRouteName="Gallery"
       backBehavior={"history"}
-      activeColor={Colors[useColorScheme()].tint}
+      activeColor={Colors[colorScheme].tint}
     >
       <BottomTab.Screen
         name="Gallery"

@@ -32,11 +32,17 @@ export type ProfileParamList = {
  */
 export interface TweetMediaList extends Array<TweetMedia>{};
 
+/**
+ * TweetMedia type object that contains all the information about the images
+ * preview_image_url ?: Will be used for previewing what the images will look like on the feed
+ * url ?: Will be used for the full-size image when pressing on the image for the ImageScreen
+ */
 export interface TweetMedia {
     height: number,
     media_key: string,
     type: string, 
     url: string,
+    preview_image_url : string,
     width: number  
 };
 

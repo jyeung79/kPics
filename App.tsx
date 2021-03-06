@@ -1,6 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import searchReducer from './redux/reducers';
@@ -27,12 +26,10 @@ export default function App() {
     return null;
   } else {
     return (
-      <SafeAreaProvider>
-        <Provider store={store}>
-          <StatusBar style={colorScheme === 'light' ? 'dark' : 'light'} translucent={false}/>
-          <Navigation colorScheme={colorScheme} />
-        </Provider>
-      </SafeAreaProvider>
+      <Provider store={store}>
+        <StatusBar style={colorScheme === 'light' ? 'dark' : 'light'} translucent={false}/>
+        <Navigation colorScheme={colorScheme} />
+      </Provider>
     );
   }
 }

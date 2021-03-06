@@ -9,9 +9,10 @@
  */
 import { StyleSheet, Image, Text, View, FlatList, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
-import { getTweet, getUserTweets } from '../utils/twitterAPI';
+import { filteredTweets, getTweet, getUserTweets } from '../utils/twitterAPI';
 import { SearchState, TweetMedia, TweetMediaList } from '../types';
 import { useSelector } from 'react-redux';
+import { Placeholder, PlaceholderMedia, Fade, Shine, ShineOverlay, Loader, Progressive } from 'rn-placeholder';
 
 const INTITIAL_IMAGES_NUM = 2;
 
@@ -50,17 +51,21 @@ export default function LatestScreen() {
   useEffect(() => {
     (async function incomingTweet() {    
       if (twitterUsers !== undefined) {
-        let promiseArray = twitterUsers.map((user: string) => getUserTweets<TweetMediaList>(user));         
+        let promiseArray = twitterUsers.map((user: string) => getUserTweets(user));
         try {
           const allTweets : TweetMediaList[] = await Promise.all(promiseArray);
-          setPhotos(allTweets.flat());
+          console.log('allTweets:😝 ', allTweets);
+          const results = filteredTweets(allTweets);
+          console.log('results:😘 ', results);
+          setPhotos(results);
+          setLoading(false);
         } catch(err) {
           console.error(err);
         }
       }
     })();
     scrollToTop();
-    console.log(photos);
+    //console.log('Photos Array:', photos);
   }, [twitterUsers]);
 
   /**
@@ -83,14 +88,31 @@ export default function LatestScreen() {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        ref={flatListRef}
-        data={photos}
-        initialNumToRender={INTITIAL_IMAGES_NUM } // Reduce intialization time to load rendered on screen
-        style={styles.photos}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.media_key.slice(2).toString()}
-      />
+      { loading && loading ? (
+          <Placeholder 
+            Animation={Fade}
+          >
+            <PlaceholderMedia 
+              style={styles.imagePlaceholder}
+            />
+            <PlaceholderMedia 
+              style={styles.imagePlaceholder}
+            />
+            <PlaceholderMedia
+              style={styles.imagePlaceholder}
+            />
+          </Placeholder>
+        ) : (
+          <FlatList
+            ref={flatListRef}
+            data={photos}
+            initialNumToRender={INTITIAL_IMAGES_NUM } // Reduce intialization time to load rendered on screen
+            style={styles.photos}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.media_key.slice(2).toString()}
+          />
+        )
+      }
     </View>
   );
 };
@@ -126,5 +148,14 @@ const styles = StyleSheet.create({
     width: '100%',
     resizeMode: 'cover',
     borderRadius: 10,
+  },
+  imagePlaceholder: {
+    height: 517,
+    width: 361,
+    marginVertical: 2,
+    marginLeft: 5,
+    marginRight: 5,
+    borderRadius: 10,
+    alignSelf: 'center',
   }
 });
