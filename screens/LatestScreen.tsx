@@ -16,18 +16,18 @@ import { Placeholder, PlaceholderMedia, Fade, Shine, ShineOverlay, Loader, Progr
 
 const INTITIAL_IMAGES_NUM = 2;
 
-const Item = (props : {photo: string, onPress(): void}) => (
+const Item = ({photo, onPress} : {photo: string, onPress(): void}) => (
   <TouchableOpacity 
     style={styles.imageContainer}
     activeOpacity={0.8}
     delayPressIn={80}
     accessibilityRole='imagebutton'
-    onPress={props.onPress}
+    onPress={onPress}
   >
     <Image 
       style={styles.image}
       source={{
-        uri: props.photo,
+        uri: photo,
         cache: 'default'
       }}
       resizeMode='cover'
@@ -79,9 +79,9 @@ export default function LatestScreen() {
     }
   };
 
-  const renderItem = (props: { item: TweetMedia }) => (
+  const renderItem = ({ item }: { item: TweetMedia }) => (
       <Item 
-        photo={props.item.url}
+        photo={item.url}
         onPress={() => showModal(!modalVisible)}
       />
   );
@@ -109,7 +109,7 @@ export default function LatestScreen() {
             initialNumToRender={INTITIAL_IMAGES_NUM } // Reduce intialization time to load rendered on screen
             style={styles.photos}
             renderItem={renderItem}
-            keyExtractor={(item) => item.media_key.slice(2).toString()}
+            keyExtractor={(item, index) => index + item.media_key}
           />
         )
       }
