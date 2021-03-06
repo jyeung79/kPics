@@ -25,8 +25,10 @@ const GroupData: SearchObject[] = [
             '1337614591661051905',
         ],
         twitterUsers : [
-            'JYPETWICE',
             'misayeon',
+            'precious_twice',
+            'TEAM_TWICE',
+            'twiceships',
         ],
         subtitle:'South Korean JYP Girl Group',
     },
@@ -39,8 +41,8 @@ const GroupData: SearchObject[] = [
             '1336975559159635968',
         ],
         twitterUsers : [
-            '1337155979360792577',
-            '1336975559159635968',
+            'blackpinkjpgs',
+            'BLACKPINK',
         ],
         subtitle:'South Korean YG Girl Group',
     },
@@ -55,10 +57,9 @@ const GroupData: SearchObject[] = [
             '1337767980864716800',
         ],
         twitterUsers : [
-            '1337247536239677440',
-            '1338190730662129665',
-            '1337779003759894529',
-            '1337767980864716800',
+            'BTS_twt',
+            'btspiics1',
+            'BTS_ARMY',
         ],
         subtitle: 'South Korean BigHit Boy Group',
     },
@@ -85,7 +86,9 @@ const GroupData: SearchObject[] = [
         avatarURL:'https://c-sf.smule.com/rs-s-sf-2/arr/2c/0f/36147c91-c6a3-4836-b4dd-c48df65f1354_256.jpg',
         favoriteTweets: [],
         twitterUsers: [
-
+            'ITZYofficial',
+            'archiveitzy',
+            'itzypicz',
         ],
         subtitle: 'South Korean JYP Girl Group'
     },
@@ -95,7 +98,9 @@ const GroupData: SearchObject[] = [
         avatarURL: 'https://scoresaber.com/imports/images/songs/07EF8B1406627598B4FAA555F07760CF897A6BF5.png',
         favoriteTweets: [],
         twitterUsers: [
-
+            'RVsmtown',
+            'REDVELVETnow',
+            '5REDVELVET',
         ],
         subtitle: 'South Korean SM Ent. Girl Group'
     },
@@ -105,7 +110,9 @@ const GroupData: SearchObject[] = [
         avatarURL:'https://img.wattpad.com/useravatar/__loonatheworld.256.61108.jpg',
         favoriteTweets: [],
         twitterUsers: [
-
+            'loonatheworld',
+            'INTL_LOONA',
+            'Ioonapic',
         ],
         subtitle: 'South Korean JYP Girl Group'
     },
@@ -115,7 +122,9 @@ const GroupData: SearchObject[] = [
         avatarURL:'https://cdn141.picsart.com/336504286073201.jpg?type=webp&to=crop&r=256',
         favoriteTweets: [],
         twitterUsers: [
-
+            'G_I_DLE',
+            'GIDLEUSA_',
+            'dailyGIDLE',
         ],
         subtitle: 'South Korean JYP Girl Group'
     },
@@ -125,7 +134,9 @@ const GroupData: SearchObject[] = [
         avatarURL:'https://pbs.twimg.com/profile_images/618839482717085696/-Uk-7250.jpg',
         favoriteTweets: [],
         twitterUsers: [
-
+            'weareoneEXO',
+            'EXOfanbase_Int',
+            'ngphuong6220',
         ],
         subtitle: 'South Korean JYP Girl Group'
     },
@@ -135,7 +146,8 @@ const GroupData: SearchObject[] = [
         avatarURL:'https://i.pinimg.com/474x/77/8a/04/778a04ae792186992af4664df3acf11e.jpg',
         favoriteTweets: [],
         twitterUsers: [
-
+            'Stray_kids',
+            'StrayKidsGlobal',
         ],
         subtitle: 'South Korean JYP Girl Group'
     },
@@ -145,7 +157,9 @@ const GroupData: SearchObject[] = [
         avatarURL:'https://c-sf.smule.com/rs-s80/arr/d6/e1/77976c1c-080f-4448-b4a6-1a9a813a26ae.jpg',
         favoriteTweets: [],
         twitterUsers: [
-
+            'bestofgot7',
+            'got7airportdata',
+            'GOT7DAILYY',
         ],
         subtitle: 'South Korean JYP Girl Group'
     },
@@ -155,7 +169,8 @@ const GroupData: SearchObject[] = [
         avatarURL: 'https://pbs.twimg.com/profile_images/684635037501792258/oiY7-ThW_400x400.jpg',
         favoriteTweets: [],
         twitterUsers: [
-
+            'RBW_MAMAMOO',
+            '4ever_smwh',
         ],
         subtitle: 'South Korean JYP Girl Group'
     },
@@ -245,6 +260,18 @@ const GroupData: SearchObject[] = [
             'chaewonpng',
         ],
         subtitle: 'Girl Group Member of Iz*one'
+    },
+    {
+        id: 18,
+        title: 'Shin Ryujin',
+        avatarURL: 'https://styles.redditmedia.com/t5_ma52a/styles/communityIcon_p1z1fwj2h8k41.jpg?width=256&format=pjpg&s=056ca9c3d0fc6390350b7928287f73168d3a29cf',
+        favoriteTweets: [
+            '1337660752631459841',
+        ],
+        twitterUsers: [
+            'ITZY5_Ryujin',
+        ],
+        subtitle: 'Girl Group Member of Itzy'
     },
 ];
 

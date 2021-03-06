@@ -25,8 +25,10 @@ const INITIAL_STATE: SearchState = {
             '1337614591661051905',
         ],
         twitterUsers : [
-            'JYPETWICE',
             'misayeon',
+            'precious_twice',
+            'TEAM_TWICE',
+            'twiceships',
         ],
         subtitle:'South Korean JYP Girl Group',
     },
