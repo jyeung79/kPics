@@ -16,19 +16,22 @@ const myHeaders = new Headers({
  * Exlore users tweets https://developer.twitter.com/en/docs/tutorials/explore-a-users-tweets
  */
 
- /**
-  * getTweet will be used to pull only 1 Tweet's infor
-  * Mainly it will be used to pull the url (HQ image link for the images)
-  * @param tweets 
-  */
-export async function getTweet (
-    tweets: string
-): Promise<TweetMediaList> {
-    console.log('Run Once already');
-   let request = 'https://api.twitter.com/2/tweets?ids=' + tweets + '&&expansions=attachments.media_keys&media.fields=url,preview_image_url,type,height,width';
+/**
+ * getTweet will be used to pull only 1 Tweet's infor
+ * Mainly it will be used to pull the url (HQ image link for the images)
+ * @param tweets 
+ */
+type Cat = 'exotic short hair' | 'british short hair' | 'munchkin';
+type BBT = 'matcha' | 'classic' | 'hojicha';
+
+//export async function getTweet (tweets) {
+export async function getTweet(tweets: string): Promise<TweetMediaList> {
+    //console.log('Run Once already');
+    //console.log('myHeaders: ', myHeaders);
+    let request = 'https://api.twitter.com/2/tweets?ids=' + tweets + '&&expansions=attachments.media_keys&media.fields=url,preview_image_url,type,height,width';
     console.log(request);
     try {
-        const response = await fetch(request ,{
+        const response = await fetch(request, {
             headers: myHeaders,
         });
         const body = await response.json();
@@ -75,7 +78,7 @@ export async function getTrending<T>(
             headers: myHeaders
         });
         const body = await response.json();
-        return body.data; 
+        return body.data;
     } catch (err) {
         return err;
     }

@@ -13,18 +13,24 @@ import { filteredTweets, getTweet, getUserTweets } from '../utils/twitterAPI';
 import { SearchState, TweetMedia, TweetMediaList } from '../types';
 import { useSelector } from 'react-redux';
 import { Placeholder, PlaceholderMedia, Fade, Shine, ShineOverlay, Loader, Progressive } from 'rn-placeholder';
+import { StoreEnhancer } from 'redux';
 
 const INTITIAL_IMAGES_NUM = 2;
 
-const Item = ({photo, onPress} : {photo: string, onPress(): void}) => (
-  <TouchableOpacity 
+// bool, string, number, undefined, null
+
+let henrysWaist: number = 40;
+
+//const Item = (props) => (
+const Item = ({ photo, onPress }: { photo: string, onPress(): void }) => (
+  <TouchableOpacity
     style={styles.imageContainer}
     activeOpacity={0.8}
     delayPressIn={80}
     accessibilityRole='imagebutton'
     onPress={onPress}
   >
-    <Image 
+    <Image
       style={styles.image}
       source={{
         uri: photo,
@@ -49,17 +55,17 @@ export default function LatestScreen() {
    * https://medium.com/javascript-in-plain-english/how-to-use-async-function-in-react-hook-useeffect-typescript-js-6204a788a435
    */
   useEffect(() => {
-    (async function incomingTweet() {    
+    (async function incomingTweet() {
       if (twitterUsers !== undefined) {
         let promiseArray = twitterUsers.map((user: string) => getUserTweets(user));
         try {
-          const allTweets : TweetMediaList[] = await Promise.all(promiseArray);
+          const allTweets: TweetMediaList[] = await Promise.all(promiseArray);
           console.log('allTweets:😝 ', allTweets);
           const results = filteredTweets(allTweets);
           console.log('results:😘 ', results);
           setPhotos(results);
           setLoading(false);
-        } catch(err) {
+        } catch (err) {
           console.error(err);
         }
       }
@@ -75,43 +81,43 @@ export default function LatestScreen() {
    */
   function scrollToTop() {
     if (flatListRef && flatListRef.current) {
-        flatListRef.current.scrollToOffset({offset: 0, animated: true});
+      flatListRef.current.scrollToOffset({ offset: 0, animated: true });
     }
   };
 
   const renderItem = ({ item }: { item: TweetMedia }) => (
-      <Item 
-        photo={item.url}
-        onPress={() => showModal(!modalVisible)}
-      />
+    <Item
+      photo={item.url}
+      onPress={() => showModal(!modalVisible)}
+    />
   );
 
   return (
     <View style={styles.container}>
-      { loading && loading ? (
-          <Placeholder 
-            Animation={Fade}
-          >
-            <PlaceholderMedia 
-              style={styles.imagePlaceholder}
-            />
-            <PlaceholderMedia 
-              style={styles.imagePlaceholder}
-            />
-            <PlaceholderMedia
-              style={styles.imagePlaceholder}
-            />
-          </Placeholder>
-        ) : (
-          <FlatList
-            ref={flatListRef}
-            data={photos}
-            initialNumToRender={INTITIAL_IMAGES_NUM } // Reduce intialization time to load rendered on screen
-            style={styles.photos}
-            renderItem={renderItem}
-            keyExtractor={(item, index) => index + item.media_key}
+      {loading && loading ? (
+        <Placeholder
+          Animation={Fade}
+        >
+          <PlaceholderMedia
+            style={styles.imagePlaceholder}
           />
-        )
+          <PlaceholderMedia
+            style={styles.imagePlaceholder}
+          />
+          <PlaceholderMedia
+            style={styles.imagePlaceholder}
+          />
+        </Placeholder>
+      ) : (
+        <FlatList
+          ref={flatListRef}
+          data={photos}
+          initialNumToRender={INTITIAL_IMAGES_NUM} // Reduce intialization time to load rendered on screen
+          style={styles.photos}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index + item.media_key}
+        />
+      )
       }
     </View>
   );
@@ -126,7 +132,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 40,
     fontWeight: 'bold',
-    color:"#e5989b"
+    color: "#e5989b"
   },
   photos: {
   },
