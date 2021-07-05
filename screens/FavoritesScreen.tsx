@@ -1,10 +1,14 @@
 import * as React from 'react';
-import { StyleSheet,Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 export default function FavoritesScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Favorites</Text>
+      <Text style={{
+        color: '#fff',
+        fontSize: 30,
+      }}>To Be Coming Soon!</Text>
       <View style={styles.separator} />
     </View>
   );
