@@ -4,8 +4,7 @@
 
 Image viewing app that displays relevant pictures from Twitter of your favorite Kpop celebrities.
 
-<img src="./assets/images/gallery.png" style="width: 250px;margin-right: 20px;">
-<img src="./assets/images/searchBar.png" style="width: 250px;">
+<img src="./assets/images/gallery.png" style="float: left" width="300"> | <img src="./assets/images/searchBar.png" style="float: left" width="300">
 
 ## Documentation
 
