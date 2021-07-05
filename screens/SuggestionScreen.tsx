@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import { ListItem, Icon, Avatar } from 'react-native-elements';
 import { SearchObject, SearchState } from '../types';
@@ -15,7 +15,6 @@ export default function SuggestionScreen() {
     const searchInput = useSelector((state : SearchState) => state.textInput);
     const suggestionList = useSelector((state: SearchState) => state.suggestions);
     const dispatch = useDispatch();
-    console.log(searchInput);
 
     const navigation = useNavigation();
 
@@ -23,7 +22,7 @@ export default function SuggestionScreen() {
         dispatch({ type: 'UPDATE_SEARCH', payload: props.item.title});
         dispatch({ type: 'SUBMIT_SEARCH', payload: props.item});
         navigation.navigate('LatestScreen');
-    }
+    };
     
     return (
         <View>
@@ -35,6 +34,7 @@ export default function SuggestionScreen() {
                     <ListItem 
                         key={props.item.id} 
                         bottomDivider
+                        containerStyle={styles.listItemContainer}
                         onPress={() => onPressHandler({...props})} 
                     >
                         <Avatar
@@ -44,8 +44,8 @@ export default function SuggestionScreen() {
                             source={{uri: props.item.avatarURL}}
                         />
                         <ListItem.Content>
-                            <ListItem.Title>{props.item.title}</ListItem.Title>
-                            <ListItem.Subtitle>{props.item.subtitle}</ListItem.Subtitle>
+                            <ListItem.Title style={styles.title}>{props.item.title}</ListItem.Title>
+                            <ListItem.Subtitle style={styles.subtitle}>{props.item.subtitle}</ListItem.Subtitle>
                         </ListItem.Content>
                     </ListItem>
                 )}
@@ -57,6 +57,16 @@ export default function SuggestionScreen() {
 
 const styles = StyleSheet.create({
     container: {
-        width: '100%'
-    } 
+        width: '100%',
+        backgroundColor: 'black',
+    },
+    listItemContainer: {
+        backgroundColor: 'black',
+    },
+    title: {
+        color: 'white',
+    },
+    subtitle: {
+        color: '#8d99ae'
+    }
 });

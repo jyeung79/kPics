@@ -28,6 +28,25 @@ export type ProfileParamList = {
 };
 
 /**
+ * Types for Tweet Media Object
+ */
+export interface TweetMediaList extends Array<TweetMedia>{};
+
+/**
+ * TweetMedia type object that contains all the information about the images
+ * preview_image_url ?: Will be used for previewing what the images will look like on the feed
+ * url ?: Will be used for the full-size image when pressing on the image for the ImageScreen
+ */
+export interface TweetMedia {
+    height: number,
+    media_key: string,
+    type: string, 
+    url: string,
+    preview_image_url : string,
+    width: number  
+};
+
+/**
  * Typechecking for Redux actions, reducers, objects
  * Might separate these types to other page
  */
@@ -35,7 +54,8 @@ export interface SearchObject {
     id: number,
     title: string,
     avatarURL ?: string,
-    twitterUsers?: String[],
+    favoriteTweets ?: string[],
+    twitterUsers?: string[],
     subtitle?: string,
 };
 
@@ -46,21 +66,14 @@ export interface SearchState {
 }
 /** 
  * Actions Types for Search
- * Do I need two actions; can't I just update search ('') when clearing or cancelling search
+ * Don't need CLEAR_SEARCH because update search can handle empty strings on texthandler
  */
 export const UPDATE_SEARCH = 'UPDATE_SEARCH';
-export const CLEAR_SEARCH = 'CLEAR_SEARCH';
 
 interface UpdateSearchAction {
   type: typeof UPDATE_SEARCH
   payload: string
 };
-
-interface ClearSearchAction {
-  type: typeof CLEAR_SEARCH
-  payload: string
-};
-
 /** 
  * Should I just merge all these actions together. It seems like I only need one reducer in the end
  * Actions Types for 
@@ -73,5 +86,5 @@ interface ClearSearchAction {
    payload: SearchObject
  };
 
-export type SearchActionTypes = UpdateSearchAction | ClearSearchAction | SubmitSearchAction;
+export type SearchActionTypes = UpdateSearchAction | SubmitSearchAction;
 

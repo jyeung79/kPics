@@ -14,7 +14,6 @@ import ProfileScreen from '../screens/ProfileScreen';
 import SearchBarComponent from '../components/SearchBar';
 
 import { BottomTabParamList, GalleryParamList, GalleryTabParamList, FavoritesParamList, ProfileParamList } from '../types';
-import Navigation from '.';
 
 const BottomTab = createMaterialBottomTabNavigator<BottomTabParamList>();
 
@@ -24,8 +23,8 @@ export default function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="Gallery"
+      backBehavior={"history"}
       activeColor={Colors[colorScheme].tint}
-      inactiveColor="#b1aeb7"
     >
       <BottomTab.Screen
         name="Gallery"
@@ -65,7 +64,6 @@ const GalleryStack = createStackNavigator<GalleryParamList>();
 const GalleryTab = createMaterialTopTabNavigator<GalleryTabParamList>();
 
 function GalleryNavigator() {
-  const colorScheme = useColorScheme();
   return (
     <GalleryStack.Navigator>
       <GalleryStack.Screen
@@ -82,12 +80,14 @@ function GalleryNavigator() {
 }
 
 function GalleryTabNavigator() {
+  const colorScheme = useColorScheme();
   return (
     <GalleryTab.Navigator
       tabBarOptions={{
         labelStyle: { fontSize: 12},
-        indicatorStyle: { backgroundColor: 'white' },
         activeTintColor: 'white',
+        inactiveTintColor: '#8e9aaf',
+        indicatorStyle: { backgroundColor: Colors[colorScheme].tint },
         allowFontScaling: true,
       }}
     >

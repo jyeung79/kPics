@@ -8,25 +8,32 @@
  * LayoutAnimation API to make layout animation changes look good
  */
 import { StyleSheet, Image, Text, View, FlatList, TouchableOpacity } from 'react-native';
-import React, { useState, useEffect } from 'react';
-import getTweets from '../utils/twitterAPI';
-import { SearchState } from '../types';
+import React, { useState, useEffect, useRef } from 'react';
+import { filteredTweets, getTweet, getUserTweets } from '../utils/twitterAPI';
+import { SearchState, TweetMedia, TweetMediaList } from '../types';
 import { useSelector } from 'react-redux';
+import { Placeholder, PlaceholderMedia, Fade, Shine, ShineOverlay, Loader, Progressive } from 'rn-placeholder';
+import { StoreEnhancer } from 'redux';
 
-const PAGE_SIZE = 5;
+const INTITIAL_IMAGES_NUM = 2;
 
-const Item = (props : {photo: string, onPress(): void}) => (
-  <TouchableOpacity 
+// bool, string, number, undefined, null
+
+let henrysWaist: number = 40;
+
+//const Item = (props) => (
+const Item = ({ photo, onPress }: { photo: string, onPress(): void }) => (
+  <TouchableOpacity
     style={styles.imageContainer}
     activeOpacity={0.8}
     delayPressIn={80}
     accessibilityRole='imagebutton'
-    onPress={props.onPress}
+    onPress={onPress}
   >
-    <Image 
+    <Image
       style={styles.image}
       source={{
-        uri: props.photo,
+        uri: photo,
         cache: 'default'
       }}
       resizeMode='cover'
@@ -34,58 +41,84 @@ const Item = (props : {photo: string, onPress(): void}) => (
   </TouchableOpacity>
 );
 
-interface TweetMediaList extends Array<TweetMedia>{};
-
-interface TweetMedia {
-    height: number,
-    media_key: string,
-    type: string, 
-    url: string,
-    width: number  
-};
-
 export default function LatestScreen() {
   const [loading, setLoading] = useState(true);
   const [photos, setPhotos] = useState<TweetMediaList>();
-  const [search, setSearch] = useState('Dahyun');
   const [modalVisible, showModal] = useState(false);
 
-  /**
-   * Redux State of searchItem object
-   */
-  const requestedTweets: String[] = useSelector((state: SearchState) => state.searchItem.twitterUsers);
-  console.log(requestedTweets);
+  const flatListRef = useRef<FlatList>(null);
 
+  const requestedTweets: string[] = useSelector((state: SearchState) => state.searchItem.favoriteTweets);
+  const twitterUsers: string[] = useSelector((state: SearchState) => state.searchItem.twitterUsers);
   /**
    *  Fetch incoming Tweet data using useEffect
    * https://medium.com/javascript-in-plain-english/how-to-use-async-function-in-react-hook-useeffect-typescript-js-6204a788a435
    */
   useEffect(() => {
-    // Fetch the new tweets when requestedTweets changes
     (async function incomingTweet() {
-      let allTweets : TweetMediaList = [];
-      for (const item of requestedTweets) {
-        const incomingTweets = await getTweets<TweetMediaList>("https://api.twitter.com/2/tweets/" + item + "?expansions=attachments.media_keys&media.fields=url,height,width");
-        allTweets.push(...incomingTweets);
+      if (twitterUsers !== undefined) {
+        let promiseArray = twitterUsers.map((user: string) => getUserTweets(user));
+        try {
+          const allTweets: TweetMediaList[] = await Promise.all(promiseArray);
+          console.log('allTweets:😝 ', allTweets);
+          const results = filteredTweets(allTweets);
+          console.log('results:😘 ', results);
+          setPhotos(results);
+          setLoading(false);
+        } catch (err) {
+          console.error(err);
+        }
       }
-      setPhotos(allTweets);
     })();
-  }, [requestedTweets]);
+    scrollToTop();
+    //console.log('Photos Array:', photos);
+  }, [twitterUsers]);
 
-  const renderItem = (props: { item: TweetMedia }) => (
-      <Item 
-        photo={props.item.url}
-        onPress={() => showModal(!modalVisible)}
-      />
+  /**
+   * Scroll to the top of the flatlist using scrollToOffset
+   * scrollToIndex gave a weird error of maximum index: -1 when app is initialized
+   * Same functionality as new search term scrolled to top of tweets
+   */
+  function scrollToTop() {
+    if (flatListRef && flatListRef.current) {
+      flatListRef.current.scrollToOffset({ offset: 0, animated: true });
+    }
+  };
+
+  const renderItem = ({ item }: { item: TweetMedia }) => (
+    <Item
+      photo={item.url}
+      onPress={() => showModal(!modalVisible)}
+    />
   );
+
   return (
     <View style={styles.container}>
-      <FlatList
-        data={photos}
-        style={styles.photos}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.media_key.slice(2).toString()}
-      />
+      {loading && loading ? (
+        <Placeholder
+          Animation={Fade}
+        >
+          <PlaceholderMedia
+            style={styles.imagePlaceholder}
+          />
+          <PlaceholderMedia
+            style={styles.imagePlaceholder}
+          />
+          <PlaceholderMedia
+            style={styles.imagePlaceholder}
+          />
+        </Placeholder>
+      ) : (
+        <FlatList
+          ref={flatListRef}
+          data={photos}
+          initialNumToRender={INTITIAL_IMAGES_NUM} // Reduce intialization time to load rendered on screen
+          style={styles.photos}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index + item.media_key}
+        />
+      )
+      }
     </View>
   );
 };
@@ -99,7 +132,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 40,
     fontWeight: 'bold',
-    color:"#e5989b"
+    color: "#e5989b"
   },
   photos: {
   },
@@ -121,5 +154,14 @@ const styles = StyleSheet.create({
     width: '100%',
     resizeMode: 'cover',
     borderRadius: 10,
+  },
+  imagePlaceholder: {
+    height: 517,
+    width: 361,
+    marginVertical: 2,
+    marginLeft: 5,
+    marginRight: 5,
+    borderRadius: 10,
+    alignSelf: 'center',
   }
 });

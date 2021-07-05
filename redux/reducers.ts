@@ -4,7 +4,6 @@ import {
     SearchState,
     SearchActionTypes,
     UPDATE_SEARCH,
-    CLEAR_SEARCH,
     SUBMIT_SEARCH,
 } from '../types';
 
@@ -18,9 +17,21 @@ const INITIAL_STATE: SearchState = {
     searchItem: {
         id: 1,
         title: 'TWICE',
-        twitterUsers : ['1124708249188483072', '1333815755465314306', '1333815691665756162'],
-        subtitle:'The most popular Girl Group in Korea',
-    }
+        avatarURL: 'https://c-sf.smule.com/rs-s78/arr/41/c6/86b96920-8110-4632-ad31-2330e0872a70.jpg',
+        favoriteTweets: [
+            '1337742281605046272',
+            '1337770959038795777',
+            '1337556043572842496',
+            '1337614591661051905',
+        ],
+        twitterUsers : [
+            'misayeon',
+            'precious_twice',
+            'TEAM_TWICE',
+            'twiceships',
+        ],
+        subtitle:'South Korean JYP Girl Group',
+    },
 };
 /**
  * Redux does a shallow-compare the result object vs the result object
@@ -37,12 +48,6 @@ const searchReducer = (state = INITIAL_STATE, action: SearchActionTypes) => {
             return {
                 textInput: action.payload,
                 suggestions: filteredSuggestions,
-                searchItem: {...state.searchItem}
-            };
-        case CLEAR_SEARCH:
-            return {
-                textInput: action.payload,
-                suggestions: MASTER_DATA,
                 searchItem: {...state.searchItem}
             };
         case SUBMIT_SEARCH:

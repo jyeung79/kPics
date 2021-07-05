@@ -2,15 +2,17 @@
   "expo": {
     "name": "kPics",
     "slug": "kPics",
+    "description": "Image viewing app that displays relevant pictures from Twitter of your favorite Kpop celebrities.",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
+    "githubUrl": "https://github.com/jyeung79/kPics",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#2E2045"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -24,11 +26,11 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#fff"
       }
     },
     "web": {
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/icon.png"
     }
   }
 }
