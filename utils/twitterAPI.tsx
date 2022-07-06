@@ -8,6 +8,8 @@ const myHeaders = new Headers({
     'authorization': 'Bearer ' + TWITTER_BEARER_TOKEN
 });
 
+console.log('Bearer token: ', TWITTER_BEARER_TOKEN);
+
 /**
  * Found explanation of media type https://developer.twitter.com/en/docs/twitter-api/data-dictionary/object-model/media
  * Explanation on how to do typed response data https://www.carlrippon.com/fetch-with-async-await-and-typescript/

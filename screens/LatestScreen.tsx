@@ -116,6 +116,7 @@ export default function LatestScreen() {
           style={styles.photos}
           renderItem={renderItem}
           keyExtractor={(item, index) => index + item.media_key}
+          numColumns={2}
         />
       )
       }
@@ -137,13 +138,12 @@ const styles = StyleSheet.create({
   photos: {
   },
   imageContainer: {
-    height: 517,
-    width: 361,
+    height: 250,
+    width: 180,
     marginVertical: 2,
-    marginLeft: 5,
-    marginRight: 5,
-    borderRadius: 10,
-
+    marginLeft: 2,
+    marginRight: 2,
+    borderRadius: 0,
     alignSelf: 'center',
   },
   itemTitle: {

@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet, Platform, SafeAreaView, View } from 'react-native';
 import { SearchBar } from 'react-native-elements';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { SearchObject, SearchState } from '../../types';
 import { useDispatch, useSelector } from 'react-redux';
@@ -44,7 +43,6 @@ export default function SearchBarComponent() {
                 leftIconContainerStyle={styles.leftIcon}
                 rightIconContainerStyle={styles.rightIcon}
                 placeholderTextColor={ 'white'}
-                
                 cancelIcon={{ color: 'white'}}
                 clearIcon={{ color: 'white'}}
                 searchIcon={{ size: 18, color: 'white' }}

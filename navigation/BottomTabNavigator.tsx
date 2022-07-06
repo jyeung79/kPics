@@ -30,21 +30,21 @@ export default function BottomTabNavigator() {
         name="Gallery"
         component={GalleryNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-photos" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="ios-images" color={color} />,
         }}
       />
       <BottomTab.Screen
         name="Favorites"
         component={FavoritesNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-heart" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="ios-heart-sharp" color={color} />,
         }}
       />
       <BottomTab.Screen
         name="Profile"
         component={ProfileNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-contact" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="ios-person-circle" color={color} />,
         }}
       />
     </BottomTab.Navigator>
@@ -54,7 +54,7 @@ export default function BottomTabNavigator() {
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
 function TabBarIcon(props: { name: string; color: string }) {
-  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
+  return <Ionicons size={25} {...props} />;
 }
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
@@ -96,11 +96,11 @@ function GalleryTabNavigator() {
       component={LatestScreen}
       options={{ title: 'Latest' }}
     />
-    <GalleryTab.Screen
+    {/* <GalleryTab.Screen
       name="PopularScreen"
       component={PopularScreen}
       options={{ title: 'Popular' }}
-    />
+    /> */}
     <GalleryTab.Screen
         name="SuggestionScreen"
         component={SuggestionScreen}

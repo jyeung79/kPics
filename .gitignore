@@ -21,3 +21,4 @@ web-build/
 
 # ignore .vscode settings
 .vscode
+yarn-error.log
